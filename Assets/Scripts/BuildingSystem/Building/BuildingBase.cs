@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 
 public class BuildingBase : MonoBehaviour
@@ -8,6 +9,8 @@ public class BuildingBase : MonoBehaviour
 
     public Buildable buildable;
     protected SpriteRenderer sr;
+    public TileBase tile;
+    protected Tilemap recoveryTilemap;
 
 
     protected virtual void Start()
@@ -23,5 +26,8 @@ public class BuildingBase : MonoBehaviour
 
     public void SetBuildable(Buildable _buildable) => buildable = new Buildable(_buildable.buildableType, _buildable.coordinates, _buildable.direction, _buildable.gameObject);
 
-
+    protected virtual void RecoveryTile()
+    {
+        recoveryTilemap.SetTile(buildable.coordinates, tile);
+    }
 }

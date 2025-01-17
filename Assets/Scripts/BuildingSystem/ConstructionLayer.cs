@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class ConstructionLayer : TileMapLayer
 {
@@ -7,26 +8,23 @@ public class ConstructionLayer : TileMapLayer
     [SerializeField] private Transform buildParent;
     [SerializeField] private List<BuildableItem> allBuildable;
 
-    public void Build(Vector3 _worldPosition, BuildableItem _item, int _direction)
+    public void Build(Vector3 _worldPosition, BuildableItem _item, int _direction, TileBase _currentTile)
     {
-        if (!IsEmpty(_worldPosition, _item))
-            return;
+        Vector3Int coordinates = tilemap.WorldToCell(_worldPosition) - new Vector3Int(1, 1);
 
-        if (!BuildingManager.instance.isBuildingMode)
-            return;
-
-        Vector3Int coordinates = tilemap.WorldToCell(_worldPosition);
-
-        GameObject itemObject = Instantiate(_item.buildingPrefab, tilemap.CellToWorld(coordinates) + BuildingManager.instance.offset, Quaternion.identity, buildParent);
+        GameObject itemObject = Instantiate(_item.buildingPrefab, tilemap.CellToWorld(coordinates + new Vector3Int(1, 1)) + BuildingManager.instance.offset, Quaternion.identity, buildParent);
 
         Buildable buildable = new Buildable(_item, coordinates, BuildingManager.instance.direction, itemObject);
         BuildingBase itemScript = itemObject.GetComponent<BuildingBase>();
 
         itemScript.SetBuildable(buildable);
         itemScript.currentConstructionLayer = this;
+        itemScript.tile = _currentTile;
 
         buildables.Add(coordinates, buildable);
-        //BuildingManager.instance.isBuildingMode = false;
+        BuildingManager.instance.isBuildingMode = false;
+
+
     }
 
 
