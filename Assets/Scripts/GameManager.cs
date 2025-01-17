@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -15,6 +16,15 @@ public class GameManager : MonoBehaviour
         }
     }
 #endregion
+
+    [SerializeField] private GameState _gameState;
+    public static GameState GameState
+    {
+        get
+        {
+            return Instance._gameState;
+        }
+    }
 
     public event EventHandler OnGameStart;
     // public event EventHandler OnGameStop;
@@ -51,4 +61,10 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 #endif
     }
+}
+
+public enum GameState
+{
+    StartMenu,
+    Gameplay
 }

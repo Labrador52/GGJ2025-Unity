@@ -12,6 +12,12 @@ public class Gameplay : MonoBehaviour
         Debug.Log("Game Started");
     }
 
+    [ContextMenu("Restart Game")]
+    public void RestartGame()
+    {
+        Debug.Log("Game Restarted");
+    }
+
     [ContextMenu("End Game")]
     public void EndGame()
     {

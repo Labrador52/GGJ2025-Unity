@@ -14,5 +14,14 @@ public class StartMenu : MonoBehaviour
         // buttonStartGame.onClick.AddListener(StartGame);
         // buttonAbout.onClick.AddListener(About);
         buttonQuit.onClick.AddListener(GameManager.Quit);
+
+        if (GameManager.GameState == GameState.StartMenu)
+        {
+
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
