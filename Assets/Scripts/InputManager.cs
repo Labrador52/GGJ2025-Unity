@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // single pattern
+#region Singleton
     private static InputManager _instance;
     public static InputManager Instance
     {
@@ -13,7 +13,9 @@ public class InputManager : MonoBehaviour
             return _instance;
         }
     }
+#endregion
 
+    private MainControls mainControls;
     public void Awake()
     {
 #region Singleton
@@ -28,5 +30,8 @@ public class InputManager : MonoBehaviour
             return;
         }
 #endregion
+
+        mainControls = new MainControls();
+        
     }
 }
