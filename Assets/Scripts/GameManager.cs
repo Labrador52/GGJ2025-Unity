@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // single pattern
+#region Singleton
     private static GameManager _instance;
     public static GameManager Instance
     {
@@ -13,6 +14,10 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+#endregion
+
+    public event EventHandler OnGameStart;
+    // public event EventHandler OnGameStop;
 
     public void Awake()
     {
@@ -20,7 +25,6 @@ public class GameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -31,4 +35,20 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void StartGame()
+    {
+        OnGameStart?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// End the game
+    /// </summary>
+    public static void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

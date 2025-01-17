@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class TransitionScreen : MonoBehaviour
 {
 #region Singleton
-    private static InputManager _instance;
-    public static InputManager Instance
+    private TransitionScreen _instance;
+    public TransitionScreen Instance
     {
         get
         {
@@ -15,8 +15,7 @@ public class InputManager : MonoBehaviour
     }
 #endregion
 
-    private MainControls mainControls;
-    public void Awake()
+    private void Awake()
     {
 #region Singleton
         if (_instance == null)
@@ -30,7 +29,6 @@ public class InputManager : MonoBehaviour
         }
 #endregion
 
-        mainControls = new MainControls();
-        
+        gameObject.SetActive(false);    // hide the transition screen
     }
 }
