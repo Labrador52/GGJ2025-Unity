@@ -12,18 +12,6 @@ public class Gameplay : MonoBehaviour
         Debug.Log("Game Started");
     }
 
-    [ContextMenu("Pause Game")]
-    public void PauseGame()
-    {
-        Debug.Log("Game Paused");
-    }
-
-    [ContextMenu("Resume Game")]
-    public void ResumeGame()
-    {
-        Debug.Log("Game Resumed");
-    }
-
     [ContextMenu("End Game")]
     public void EndGame()
     {
