@@ -45,7 +45,7 @@ public class Gameplay : MonoBehaviour
             _bubbleSpawnWaiting += 1;
             if (_bubbleSpawnWaiting == _bubbleSpawnInterval)
             {
-                Bubble.Spawn();
+                Bubble.Spawn(MapManager.instance.GetBeginWorldCoordinate());
                 _bubbleSpawnWaiting = 0;
             }
         }

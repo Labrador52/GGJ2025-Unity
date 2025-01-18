@@ -161,12 +161,18 @@ public class Bubble : MonoBehaviour
         Spawn(Vector2.zero, new Vector2(-1.0f, 0.5f));
     }
 
+    public static void Spawn(Vector2 position)
+    {
+        Spawn(position, new Vector2(-1.0f, 0.5f));
+    }
+
     /// <summary>
     /// Spawn Buggle on the given position
     /// </summary>
     /// <param name="Spawn Tile Cell position"></param>
     public static void Spawn(Vector2 position, Vector2 destination)
     {
+        position += new Vector2(0.0f, 0.25f);
         // 实例化Bubble预制体
         GameObject bubble = Instantiate(PrefabManager.Instance.BubblePrefab, position, Quaternion.identity) as GameObject;
         bubble.GetComponent<Bubble>().SetDestination(destination);
