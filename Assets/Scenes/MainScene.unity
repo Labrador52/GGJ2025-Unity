@@ -720,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ffe4628b906c64fbc1a1595d6b42eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _globalCfg: {fileID: 11400000, guid: da2244c0237c45c4f8713868939a7dfb, type: 2}
   _gameState: 0
 --- !u!1 &920465306
 GameObject:
@@ -1652,9 +1653,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3429934301630674005, guid: f01004258c70e504b8cb6161286445ee, type: 3}
+      propertyPath: m_Radius
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3667585852502080343, guid: f01004258c70e504b8cb6161286445ee, type: 3}
       propertyPath: m_Name
       value: Bubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 4365468446287801749, guid: f01004258c70e504b8cb6161286445ee, type: 3}
+      propertyPath: m_Radius
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7964366503728152753, guid: f01004258c70e504b8cb6161286445ee, type: 3}
       propertyPath: m_LocalPosition.y
