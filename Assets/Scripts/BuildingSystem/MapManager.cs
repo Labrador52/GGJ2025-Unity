@@ -9,6 +9,7 @@ public class MapManager : MonoBehaviour
     private Dictionary<Vector3Int, Fan> fanList;
     [SerializeField] private GameObject tileInstantiate;
     [SerializeField] private Tile defaultTile;
+    private GridInfo gridInfo;
 
     public Tilemap ground;
     public Tilemap mountain;
@@ -45,6 +46,7 @@ public class MapManager : MonoBehaviour
     {
         tileInstantiate = _tileInstantiat;
         defaultTile = _defaultTile;
+        gridInfo = _Grid.GetComponentInChildren<GridInfo>();
 
         int childCount = _Grid.transform.childCount;
         for(int i = 0;i<childCount;i++)
@@ -75,6 +77,10 @@ public class MapManager : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public Vector3 GetEndWorldCoordianate() => gridInfo.endWorldCoor;
+    public Vector3 GetBeginWorldCoordinate() => gridInfo.beginWorldCoor;
+    public Vector3 GetMiddleWorldCoordinate() => gridInfo.middleWorldCoor;
+
     private void InitialMap()
     {
         for (int i = -maxLength / 2; i < maxLength / 2; i++) 
@@ -94,10 +100,9 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        // Debug.Log("12345");
     }
 
-
+    public void CloseTip() => gridInfo.tip.SetActive(false);
 
     public void RegisteredFan(Vector3Int _effectCoordinate,Fan _fan) => fanList.Add(_effectCoordinate, _fan);
 

@@ -6,7 +6,7 @@ public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager instance;
     public bool isBuildingMode;
-    private BuildableItem activeBuildable;
+    [SerializeField] private BuildableItem activeBuildable;
     public ConstructionLayer constructionLayer;
     [SerializeField] private PreviewLayer previewLayer;
     [HideInInspector] public int direction = 0;
