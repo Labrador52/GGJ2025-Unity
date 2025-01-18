@@ -9,16 +9,18 @@ public class Fan : BuildingBase
     {
         base.Start();
 
-        recoveryTilemap = BuildingManager.instance.mountain;
+        recoveryTilemap = MapManager.instance.mountain;
 
         RecoveryTile();
-        effectZone = buildable.coordinates + GetDirectionVector();
+        effectZone = buildable.coordinates + GetDirectionVector(buildable.direction);
+
+        MapManager.instance.RegisteredFan(effectZone, this);
     }
 
-    private Vector3Int GetDirectionVector()
+    public static Vector3Int GetDirectionVector(int _direction)
     {
 
-        switch (buildable.direction)
+        switch (_direction)
         {
             case 0:
                 return new Vector3Int(1, 0);
@@ -33,14 +35,6 @@ public class Fan : BuildingBase
         }
     }
 
-    public Vector3Int FanLogic(Transform _bubble)
-    {
-        Vector3Int bubbleCoordinate = currentConstructionLayer.tilemap.WorldToCell(_bubble.position);
-        if (bubbleCoordinate == effectZone)
-        {
-            return GetDirectionVector() * effectLength;
-        }
-        else
-            return new Vector3Int(0, 0);
-    }
+    public Vector3Int FanLogic() => GetDirectionVector(buildable.direction) * effectLength;
+
 }

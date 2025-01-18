@@ -12,7 +12,9 @@ public class ConstructionLayer : TileMapLayer
     {
         Vector3Int coordinates = tilemap.WorldToCell(_worldPosition) - new Vector3Int(1, 1);
 
-        GameObject itemObject = Instantiate(_item.buildingPrefab, tilemap.CellToWorld(coordinates + new Vector3Int(1, 1)) + BuildingManager.instance.offset, Quaternion.identity, buildParent);
+        Vector3 zOffset = new Vector3(0, 0, coordinates.x + coordinates.y);
+
+        GameObject itemObject = Instantiate(_item.buildingPrefab, tilemap.CellToWorld(coordinates + new Vector3Int(1, 1)) + BuildingManager.instance.offset + zOffset, Quaternion.identity, buildParent);
 
         Buildable buildable = new Buildable(_item, coordinates, BuildingManager.instance.direction, itemObject);
         BuildingBase itemScript = itemObject.GetComponent<BuildingBase>();

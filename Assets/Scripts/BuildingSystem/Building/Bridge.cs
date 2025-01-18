@@ -4,7 +4,7 @@ public class Bridge : BuildingBase
     {
         base.Start();
 
-        recoveryTilemap = BuildingManager.instance.water;
+        recoveryTilemap = MapManager.instance.water;
 
         RecoveryTile();
     }

@@ -3,8 +3,7 @@ using UnityEngine.Tilemaps;
 
 public class BuildingManager : MonoBehaviour
 {
-    public int maxWidth;
-    public int maxLength;
+
     public static BuildingManager instance;
     public bool isBuildingMode;
     public BuildableItem activeBuildable;
@@ -12,11 +11,7 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private PreviewLayer previewLayer;
     [HideInInspector] public int direction = 0;
     public Vector3 offset;
-    [Space]
-    public Tilemap ground;
-    public Tilemap mountain;
-    public Tilemap water;
-    public Tilemap contaminate;
+    
 
     private void Awake()
     {
@@ -35,14 +30,14 @@ public class BuildingManager : MonoBehaviour
         if (constructionLayer == null)
             return;
 
-        if (Mathf.Abs(constructionLayer.tilemap.WorldToCell(mousePosition).x) > maxWidth / 2 ||
-            Mathf.Abs(constructionLayer.tilemap.WorldToCell(mousePosition).y) > maxLength / 2)
+        if (Mathf.Abs(constructionLayer.tilemap.WorldToCell(mousePosition).x) > MapManager.instance.maxWidth / 2 ||
+            Mathf.Abs(constructionLayer.tilemap.WorldToCell(mousePosition).y) > MapManager.instance.maxLength / 2)
             return;
 
         if (isBuildingMode)
         {
             if (Input.GetKeyDown(KeyCode.R))
-                direction = direction < 3 ? direction + 1 : 0;
+                direction = direction < activeBuildable.previewSprites.Count - 1 ? direction + 1 : 0;
 
             BuildingLogic(mousePosition);
         }
@@ -58,21 +53,9 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        bool isValid = true;
-
-        Vector3 checkPoint = constructionLayer.tilemap.CellToWorld(constructionLayer.tilemap.WorldToCell(_mousePosition));
-
-        Collider2D hit = Physics2D.OverlapPoint(checkPoint);
-        if (hit != null && hit.GetComponent<Tilemap>() != null)
-        {
-            if (hit.gameObject.tag == "Water" || hit.gameObject.tag == "Mountain")
-                isValid = false;
-            else
-                isValid = constructionLayer.IsEmpty(_mousePosition, activeBuildable);
-        }
-        else isValid = false;
-            
-        previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
+        bool isValid;
+        Collider2D hit;
+        CanBuilding(_mousePosition, out isValid, out hit);
 
         if (isValid && Input.GetMouseButtonDown(0))
         {
@@ -85,4 +68,27 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
+    private void CanBuilding(Vector3 _mousePosition, out bool isValid, out Collider2D hit)
+    {
+        isValid = true;
+        Vector3 checkPoint = constructionLayer.tilemap.CellToWorld(constructionLayer.tilemap.WorldToCell(_mousePosition));
+
+        hit = Physics2D.OverlapPoint(checkPoint);
+        if (hit != null && hit.GetComponent<Tilemap>() != null)
+        {
+            if (hit.gameObject.tag == "Water" || hit.gameObject.tag == "Mountain")
+                isValid = false;
+            else
+                isValid = constructionLayer.IsEmpty(_mousePosition, activeBuildable);
+        }
+        else isValid = false;
+
+        if (isValid && activeBuildable.buildingId == 0)
+        {
+            Vector3Int effectCoordinate = Fan.GetDirectionVector(direction) + constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1);
+            isValid = !MapManager.instance.IsOverlapFan(effectCoordinate);
+        }
+
+        previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
+    }
 }
