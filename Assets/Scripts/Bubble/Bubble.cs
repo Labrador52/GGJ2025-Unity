@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bubble : MonoBehaviour
 {
     [SerializeField] private Vector2 _position;
     [SerializeField] private Vector2 _destination;
-    [SerializeField] private int _energy;
+    [SerializeField] private int energy;
+    [SerializeField] private float velocity;
     public Vector2 Position
     {
         get
@@ -20,6 +23,8 @@ public class Bubble : MonoBehaviour
     [SerializeField] public bool isFacingFront;
 
     [SerializeField] public bool isFill;
+
+    [SerializeField] private int lifeLeft;
 
     [SerializeField] private GameObject bubbleSpriteGameObject;
     [SerializeField] private GameObject bubbleShadowGameObject;
@@ -56,6 +61,9 @@ public class Bubble : MonoBehaviour
         solidHeight = 1.0f; // The height of the Buggle, TEMPORARY
 
         AnimationDeltaTime = UnityEngine.Random.Range(0.0f, Mathf.PI * 2);
+    
+        velocity = 0.05f;
+        lifeLeft = 1200;
     }
 
     private void Update()
@@ -95,10 +103,22 @@ public class Bubble : MonoBehaviour
         // }
 #endregion
 
-    float distance = Vector2.SqrMagnitude(_position - _destination);
-
-    if (distance <= 0.01f)
+    // life
+    lifeLeft -= 1;
+    if (lifeLeft <= 0)
     {
+        Die();
+        return;
+    }
+
+    // move
+    transform.position = Vector2.MoveTowards(transform.position, _destination, velocity);
+
+    float distance = Vector2.SqrMagnitude((Vector2)transform.position - _destination);
+
+    if (distance <= 0.0001f)
+    {
+        transform.position = _destination;
         ArriveDestination();
     }
 
@@ -120,19 +140,25 @@ public class Bubble : MonoBehaviour
 
     private void ArriveDestination()
     {
-        // trigger local
+        // Debug.Log("Arrive!");
+        energy -= 1;
+        energy = math.max(energy, 0);
 
-        // if nothing happened, calculate nre destination
+        // check
+
+        _destination += new Vector2(isFacingRight? 1.0f: -1.0f, isFacingFront? -0.5f: 0.5f);
+
+        velocity = (energy >= 4)? 0.05f: 0.025f;
     }
 
-    private void Die()
+    internal void Die()
     {
-        
+        Destroy(gameObject);
     }
 
     public static void Spawn()
     {
-        Spawn(Vector2.zero, Vector2.zero);
+        Spawn(Vector2.zero, new Vector2(-1.0f, 0.5f));
     }
 
     /// <summary>
