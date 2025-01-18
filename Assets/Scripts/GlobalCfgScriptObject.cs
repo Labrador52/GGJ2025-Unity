@@ -13,4 +13,7 @@ public class GlobalCfgScriptObject : ScriptableObject
     public float TriggerPickup = 1.5f;
     public float TriggerFog = 2.5f;
 
+    [Header("Gameplay Config")]
+    public int bubbleSpawnInterval = 100;
+
 }
