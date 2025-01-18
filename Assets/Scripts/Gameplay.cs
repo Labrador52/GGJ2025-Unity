@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class Gameplay : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Game Started");
+        InitializeLevel(0);
     }
 
     [ContextMenu("Restart Game")]
@@ -56,4 +58,11 @@ public class Gameplay : MonoBehaviour
     }
 #endregion
 
+    private void InitializeLevel(int level)
+    {
+        GameObject levelGameObject = Instantiate(PrefabManager.Instance.LevelPrefabs[level], gameObject.transform);
+        levelGameObject.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        GameObject gridGameObject = levelGameObject.transform.Find("Grid").gameObject;
+        Debug.Log(gridGameObject);
+    }
 }
