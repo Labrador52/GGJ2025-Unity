@@ -4,6 +4,29 @@ using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
+#region Singleton
+    private static Gameplay _instance;
+    public static Gameplay Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+#endregion
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
 
 #region Gameplay Controls
     [ContextMenu("Start Game")]
