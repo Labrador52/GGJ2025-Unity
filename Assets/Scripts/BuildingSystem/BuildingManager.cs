@@ -1,20 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class BuildingManager : MonoBehaviour
 {
-
     public static BuildingManager instance;
     public bool isBuildingMode;
-    public BuildableItem activeBuildable;
+    private BuildableItem activeBuildable;
     public ConstructionLayer constructionLayer;
     [SerializeField] private PreviewLayer previewLayer;
     [HideInInspector] public int direction = 0;
-    public Vector3 offset;
-    
+    public Vector3 offset = new Vector3(0,0.25f);
+    [SerializeField] private List<BuildableItem> allBuildable;
 
     private void Awake()
     {
+        gameObject.SetActive(false);
+
         if (instance != null)
             Destroy(instance.gameObject);
         else
@@ -43,6 +45,24 @@ public class BuildingManager : MonoBehaviour
         }
         else
             previewLayer.ClearPreview();
+    }
+
+    //_Grid为level prefab下的Grid对象，_allBuildable存放所有的BuildableItem //BuildableItem为ScriptableObject //顺序需要与BuildableItem中id字段顺序保持一致
+    public void Initial(GameObject _Grid,List<BuildableItem> _allBuildable)
+    {
+        constructionLayer = _Grid.GetComponentInChildren<ConstructionLayer>();
+        previewLayer = _Grid.GetComponentInChildren<PreviewLayer>();
+
+        allBuildable = _allBuildable;
+
+        gameObject.SetActive(true);
+    }
+
+    public void SetActiveBuilding(int _id)
+    {
+        isBuildingMode = true;
+
+        activeBuildable = allBuildable[_id];
     }
 
     private void BuildingLogic(Vector3 _mousePosition)
@@ -88,6 +108,9 @@ public class BuildingManager : MonoBehaviour
             Vector3Int effectCoordinate = Fan.GetDirectionVector(direction) + constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1);
             isValid = !MapManager.instance.IsOverlapFan(effectCoordinate);
         }
+
+        if (isValid)
+            isValid = Inventory.instance.CanRemoveItem(Inventory.instance.allMaterials[activeBuildable.buildingId]);
 
         previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
     }

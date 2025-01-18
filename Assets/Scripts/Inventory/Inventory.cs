@@ -5,9 +5,12 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     private Dictionary<MaterialsItem, int> materialsInventory;
+    public List<MaterialsItem> allMaterials;
 
     private void Awake()
     {
+        gameObject.SetActive(false);
+
         if (instance != null)
             Destroy(instance.gameObject);
         else
@@ -17,6 +20,14 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         materialsInventory = new Dictionary<MaterialsItem, int>();
+    }
+
+    //_allMaterials存放所有的MaterialsItem //MaterialsItem为ScriptableObject //顺序需要与MaterialsItem中id字段顺序保持一致
+    public void Initial(List<MaterialsItem> _allMaterials)
+    {
+        allMaterials = _allMaterials;   
+
+        gameObject.SetActive(true);
     }
 
     public void AddItem(MaterialsItem _materials, int _num = 1)
