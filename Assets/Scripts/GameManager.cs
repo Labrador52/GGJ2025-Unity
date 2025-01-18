@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
 
             // Set Buggle Height
             Bubble.SetSolidHeight(_globalCfg.solidHeight);
+
+            Gameplay.Instance.SetInterval(_globalCfg.bubbleSpawnInterval);
         }
     }
 
