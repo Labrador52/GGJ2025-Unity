@@ -1,12 +1,11 @@
-public class Fan : BuildingBase
+public class Bridge : BuildingBase
 {
     protected override void Start()
     {
         base.Start();
 
-        recoveryTilemap = BuildingManager.instance.mountain;
+        recoveryTilemap = BuildingManager.instance.water;
 
         RecoveryTile();
     }
-
 }

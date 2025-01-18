@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1ffe4628b906c64fbc1a1595d6b42eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameState: 0
 --- !u!1 &920465306
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,6 +973,7 @@ GameObject:
   - component: {fileID: 1216930542}
   - component: {fileID: 1216930541}
   - component: {fileID: 1216930540}
+  - component: {fileID: 1216930544}
   m_Layer: 5
   m_Name: Transition Screen Canvas
   m_TagString: Untagged
@@ -1062,6 +1064,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1216930544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216930539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dedf1c74f28771f4d9bb365ebffe070e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1273777001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,13 +1238,14 @@ GameObject:
   - component: {fileID: 1485298173}
   - component: {fileID: 1485298172}
   - component: {fileID: 1485298171}
+  - component: {fileID: 1485298175}
   m_Layer: 5
   m_Name: Gameplay Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1485298171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1314,6 +1329,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1485298175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485298170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b4becd99a0d70e47a988b292ed67f18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1639983707
 GameObject:
   m_ObjectHideFlags: 0
