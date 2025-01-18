@@ -17,12 +17,22 @@ public class PrefabManager : MonoBehaviour
 
     // prefab bubble
     [SerializeField] private GameObject _bubblePrefab;
+    
 
     public GameObject BubblePrefab
     {
         get
         {
             return _instance._bubblePrefab;
+        }
+    }
+
+    [SerializeField] private GameObject[] _levelPrefabs;
+    public GameObject[] LevelPrefabs
+    {
+        get
+        {
+            return _levelPrefabs;
         }
     }
 
