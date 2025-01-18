@@ -34,7 +34,9 @@ public class Gameplay : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Game Started");
-        InitializeLevel(0);
+        LoadLevel(0);
+        FogOfWarManager.Instance.CreateFog();
+        StartMenu.Instance.gameObject.SetActive(false);
     }
 
     [ContextMenu("Restart Game")]
@@ -52,9 +54,10 @@ public class Gameplay : MonoBehaviour
 
 #region Level Controls
     [ContextMenu("Load Level")]
-    public void LoadLevel()
+    public void LoadLevel(int levelNumber)
     {
         Debug.Log("Level Loaded");
+        InitializeLevel(levelNumber);
     }
 #endregion
 
@@ -63,6 +66,13 @@ public class Gameplay : MonoBehaviour
         GameObject levelGameObject = Instantiate(PrefabManager.Instance.LevelPrefabs[level], gameObject.transform);
         levelGameObject.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         GameObject gridGameObject = levelGameObject.transform.Find("Grid").gameObject;
-        Debug.Log(gridGameObject);
+        // Debug.Log(gridGameObject);
+        List<BuildableItem> allBuildale;
+        allBuildale = PrefabManager.AllBuildable;
+        BuildingManager.instance.Initial(gridGameObject, allBuildale);
+
+        MapManager.instance.Initial(gridGameObject, PrefabManager.TileInstantiat, PrefabManager.Tile);
+
+        Inventory.instance.Initial(PrefabManager.AllMaterials);
     }
 }

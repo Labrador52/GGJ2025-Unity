@@ -22,7 +22,11 @@ public class Inventory : MonoBehaviour
         materialsInventory = new Dictionary<MaterialsItem, int>();
     }
 
-    //_allMaterials存放所有的MaterialsItem //MaterialsItem为ScriptableObject //顺序需要与MaterialsItem中id字段顺序保持一致
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="存放所有的MaterialsItem"></param>
     public void Initial(List<MaterialsItem> _allMaterials)
     {
         allMaterials = _allMaterials;   

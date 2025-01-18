@@ -47,7 +47,11 @@ public class BuildingManager : MonoBehaviour
             previewLayer.ClearPreview();
     }
 
-    //_Grid为level prefab下的Grid对象，_allBuildable存放所有的BuildableItem //BuildableItem为ScriptableObject //顺序需要与BuildableItem中id字段顺序保持一致
+    /// <summary>
+    /// Initial
+    /// </summary>
+    /// <param name="_Grid"></param>
+    /// <param name="所有的建筑"></param>
     public void Initial(GameObject _Grid,List<BuildableItem> _allBuildable)
     {
         constructionLayer = _Grid.GetComponentInChildren<ConstructionLayer>();

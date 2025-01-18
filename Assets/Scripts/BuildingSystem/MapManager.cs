@@ -15,8 +15,8 @@ public class MapManager : MonoBehaviour
     public Tilemap water;
     public Tilemap contaminate;
     [Space]
-    public int maxWidth = 48;
-    public int maxLength = 48;
+    public int maxWidth;
+    public int maxLength;
 
     private void Awake()
     {
@@ -35,7 +35,12 @@ public class MapManager : MonoBehaviour
         InitialMap();
     }
 
-    //_Grid为level prefab下的Grid对象，_tileInstantiat为预制体tileInstantiat，_defaultTile为任一草地瓦片
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="level prefab下的Grid对象"></param>
+    /// <param name="预制体tileInstantiat"></param>
+    /// <param name="任一草地瓦片"></param>
     public void Initial(GameObject _Grid,GameObject _tileInstantiat, Tile _defaultTile)
     {
         tileInstantiate = _tileInstantiat;
@@ -64,6 +69,9 @@ public class MapManager : MonoBehaviour
             }
         }
 
+        maxWidth = 48;
+        maxLength = 48;
+
         gameObject.SetActive(true);
     }
 
@@ -80,10 +88,13 @@ public class MapManager : MonoBehaviour
                     Tile tile = tileBase as Tile;
                     GameObject tileItem = Instantiate(tileInstantiate, mountain.CellToWorld(new Vector3Int(i, j)), Quaternion.identity);
                     tileItem.GetComponent<SpriteRenderer>().sprite = tile.sprite;
+                    tileItem.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    tileItem.transform.SetParent(mountain.gameObject.transform.parent);
                     tileItem.transform.position -= new Vector3(0, -0.25f, tileItem.transform.position.x + tileItem.transform.position.y);
                 }
             }
         }
+        // Debug.Log("12345");
     }
 
 

@@ -5,13 +5,35 @@ using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
+#region
+    private static StartMenu _instance;
+    public static StartMenu Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+#endregion
+
+
     [SerializeField] private Button buttonStartGame;
     [SerializeField] private Button buttonAbout;
     [SerializeField] private Button buttonQuit;
     
     private void Awake()
     {
-        // buttonStartGame.onClick.AddListener(StartGame);
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        buttonStartGame.onClick.AddListener(Gameplay.Instance.StartGame);
         // buttonAbout.onClick.AddListener(About);
         buttonQuit.onClick.AddListener(GameManager.Quit);
 

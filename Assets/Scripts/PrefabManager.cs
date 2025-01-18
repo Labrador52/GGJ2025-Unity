@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PrefabManager : MonoBehaviour
 {
@@ -33,6 +34,42 @@ public class PrefabManager : MonoBehaviour
         get
         {
             return _levelPrefabs;
+        }
+    }
+
+    [SerializeField] private GameObject _tileInstantiat;
+    public static GameObject TileInstantiat
+    {
+        get
+        {
+            return Instance._tileInstantiat;
+        }
+    }
+
+    [SerializeField] private List<BuildableItem> _allBuildale;
+    public static List<BuildableItem> AllBuildable
+    {
+        get
+        {
+            return Instance._allBuildale;
+        }
+    }
+
+    [SerializeField] private Tile _tile;
+    public static Tile Tile
+    {
+        get
+        {
+            return Instance._tile;
+        }
+    }
+
+    [SerializeField] private List<MaterialsItem> _allMaterials;
+    public static List<MaterialsItem> AllMaterials
+    {
+        get
+        {
+            return Instance._allMaterials;
         }
     }
 

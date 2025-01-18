@@ -55,9 +55,9 @@ public class FogOfWarManager : MonoBehaviour
 
 
     [ContextMenu("Create Fog of War")]
-    public void CreateFoW()
+    public void CreateFog()
     {
-        ClearFoW();
+        ClearFog();
 
         if (_fogOfWarResolution <= 0.0f)
         {
@@ -84,7 +84,7 @@ public class FogOfWarManager : MonoBehaviour
     }
 
     [ContextMenu("Clear Fog of War")]
-    public void ClearFoW()
+    public void ClearFog()
     {
         Debug.Log("Clearing Fog of War");
         while (_fogOfWarPlane.transform.childCount > 0)

@@ -70,6 +70,7 @@ public class Bubble : MonoBehaviour
 
     private void FixedUpdate()
     {
+#region Old Movement Method
         // // Calculate the distance between the current position and the destination
         // float distance = Vector2.SqrMagnitude(_position - _destination);
 
@@ -93,6 +94,9 @@ public class Bubble : MonoBehaviour
 
         //     _destination += new Vector2(1.0f, 0.5f);
         // }
+#endregion
+
+    
     }
 
     public void SetDestination(Vector2 destination)
