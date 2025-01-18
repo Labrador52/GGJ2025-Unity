@@ -16,6 +16,11 @@ public class Bubble : MonoBehaviour
         }
     }
 
+    [SerializeField] public bool isFacingRight;
+    [SerializeField] public bool isFacingFront;
+
+    [SerializeField] public bool isFill;
+
     [SerializeField] private GameObject bubbleSpriteGameObject;
     [SerializeField] private GameObject bubbleShadowGameObject;
 
@@ -65,29 +70,29 @@ public class Bubble : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Calculate the distance between the current position and the destination
-        float distance = Vector2.SqrMagnitude(_position - _destination);
+        // // Calculate the distance between the current position and the destination
+        // float distance = Vector2.SqrMagnitude(_position - _destination);
 
-        if (distance > 0.025f)
-        {
-            // Calculate speed with energy
-            float speed = (_energy >= 4)? 0.1f : 0.05f;
-            //move to the destination
-            _position = Vector2.MoveTowards(_position, _destination, speed);
-            // Apply the new position to the Buggle
-            transform.position = _position;
-        }
-        else
-        {
-            _energy -= 1;
-            if (_energy <= 0)
-            {
-                _energy = 0;
-                // play the death animation
-            }
+        // if (distance > 0.025f)
+        // {
+        //     // Calculate speed with energy
+        //     float speed = (_energy >= 4)? 0.1f : 0.05f;
+        //     //move to the destination
+        //     _position = Vector2.MoveTowards(_position, _destination, speed);
+        //     // Apply the new position to the Buggle
+        //     transform.position = _position;
+        // }
+        // else
+        // {
+        //     _energy -= 1;
+        //     if (_energy <= 0)
+        //     {
+        //         _energy = 0;
+        //         // play the death animation
+        //     }
 
-            _destination += new Vector2(1.0f, 0.5f);
-        }
+        //     _destination += new Vector2(1.0f, 0.5f);
+        // }
     }
 
     public void SetDestination(Vector2 destination)
