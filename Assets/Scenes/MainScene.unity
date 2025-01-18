@@ -2135,6 +2135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildingMode: 0
+  activeBuildable: {fileID: 0}
   constructionLayer: {fileID: 0}
   previewLayer: {fileID: 0}
   direction: 0
@@ -2185,6 +2186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905241a8173a6894c821abf5bbd1c072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaying: 0
+  _bubbleSpawnInterval: 0
+  _bubbleSpawnWaiting: 0
 --- !u!1 &1274103943
 GameObject:
   m_ObjectHideFlags: 0
