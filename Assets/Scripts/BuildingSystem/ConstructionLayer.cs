@@ -26,7 +26,7 @@ public class ConstructionLayer : TileMapLayer
         buildables.Add(coordinates, buildable);
         BuildingManager.instance.isBuildingMode = false;
 
-        Inventory.instance.RemoveItem(Inventory.instance.allMaterials[_item.buildingId]);
+        //Inventory.instance.RemoveItem(Inventory.instance.allMaterials[_item.buildingId]);
     }
 
 

@@ -4,17 +4,20 @@ public class Fan : BuildingBase
 {
     private Vector3Int effectZone;
     [SerializeField] private int effectLength;
-
+    [SerializeField] private Animator animator;
     protected override void Start()
     {
         base.Start();
 
         recoveryTilemap = MapManager.instance.mountain;
+        animator = GetComponentInChildren<Animator>();
+
+        animator.SetInteger("direction", buildable.direction);
 
         RecoveryTile();
         effectZone = buildable.coordinates + GetDirectionVector(buildable.direction);
 
-        MapManager.instance.RegisteredFan(effectZone, this);
+        //MapManager.instance.RegisteredFan(effectZone, this);
     }
 
     public static Vector3Int GetDirectionVector(int _direction)
