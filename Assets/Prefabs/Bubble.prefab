@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1416952571666209754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 0.6, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -161,6 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7964366503728152753}
   - component: {fileID: 23856344228377002}
+  - component: {fileID: 5971350790839683110}
   m_Layer: 0
   m_Name: Bubble Circle Sprite
   m_TagString: Untagged
@@ -224,7 +225,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -339980303, guid: 02ba21b9b8c0f574ea1d3a602788d010, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,6 +236,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5971350790839683110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2521797576893704199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cff78434a2a338489ccf3c35b918af7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubble: {fileID: 8498345684536219834}
+  spriteRenderer: {fileID: 23856344228377002}
 --- !u!1 &3195149885814833710
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,6 +366,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ace122ddfc52744593320ca238db71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _position: {x: 0, y: 0}
+  _destination: {x: 0, y: 0}
+  _energy: 0
+  isFacingRight: 0
+  isFacingFront: 0
+  isFill: 0
   bubbleSpriteGameObject: {fileID: 2521797576893704199}
   bubbleShadowGameObject: {fileID: 1416952571666209754}
   TriggerBody: {fileID: 6586672430325849008}
@@ -365,7 +386,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1212077122698299904}
+  - component: {fileID: 6849910409376547507}
   - component: {fileID: 4365468446287801749}
+  - component: {fileID: 8624542241454302420}
   m_Layer: 0
   m_Name: Collider Fog
   m_TagString: Untagged
@@ -382,12 +405,39 @@ Transform:
   m_GameObject: {fileID: 8975668148970922601}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2263214452803749548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &6849910409376547507
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975668148970922601}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 0
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &4365468446287801749
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -400,7 +450,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -422,4 +472,16 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 2.5
+--- !u!114 &8624542241454302420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8975668148970922601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad3b67db1b4f694487b93d761278916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

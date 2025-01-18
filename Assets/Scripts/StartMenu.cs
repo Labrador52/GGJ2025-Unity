@@ -17,11 +17,12 @@ public class StartMenu : MonoBehaviour
 
         if (GameManager.GameState == GameState.StartMenu)
         {
+            gameObject.SetActive(true);
 
         }
         else
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 }
