@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Gameplay : MonoBehaviour
@@ -11,10 +12,18 @@ public class Gameplay : MonoBehaviour
     {
         get
         {
+            if (_instance == null)
+            {
+                return GameObject.Find("Gameplay").GetComponent<Gameplay>();
+            }
             return _instance;
         }
     }
 #endregion
+
+    [SerializeField] private bool isPlaying;
+    [SerializeField] private int _bubbleSpawnInterval;
+    [SerializeField] private int _bubbleSpawnWaiting;
 
     private void Awake()
     {
@@ -29,6 +38,19 @@ public class Gameplay : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (isPlaying)
+        {
+            _bubbleSpawnWaiting += 1;
+            if (_bubbleSpawnWaiting == _bubbleSpawnInterval)
+            {
+                Bubble.Spawn();
+                _bubbleSpawnWaiting = 0;
+            }
+        }
+    }
+
 #region Gameplay Controls
     [ContextMenu("Start Game")]
     public void StartGame()
@@ -37,18 +59,23 @@ public class Gameplay : MonoBehaviour
         LoadLevel(0);
         FogOfWarManager.Instance.CreateFog();
         StartMenu.Instance.gameObject.SetActive(false);
+
+        isPlaying = true;
     }
 
     [ContextMenu("Restart Game")]
     public void RestartGame()
     {
         Debug.Log("Game Restarted");
+        // destory current level
+        // load level
     }
 
     [ContextMenu("End Game")]
     public void EndGame()
     {
         Debug.Log("Game Ended");
+        isPlaying = false;
     }
 #endregion
 
@@ -63,6 +90,7 @@ public class Gameplay : MonoBehaviour
 
     private void InitializeLevel(int level)
     {
+
         GameObject levelGameObject = Instantiate(PrefabManager.Instance.LevelPrefabs[level], gameObject.transform);
         levelGameObject.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         GameObject gridGameObject = levelGameObject.transform.Find("Grid").gameObject;
@@ -74,5 +102,10 @@ public class Gameplay : MonoBehaviour
         MapManager.instance.Initial(gridGameObject, PrefabManager.TileInstantiat, PrefabManager.Tile);
 
         Inventory.instance.Initial(PrefabManager.AllMaterials);
+    }
+
+    public void SetInterval(int internvl)
+    {
+        _bubbleSpawnInterval = internvl;
     }
 }
