@@ -72,7 +72,6 @@ public class Bubble : MonoBehaviour
     {
 #region Old Movement Method
         // // Calculate the distance between the current position and the destination
-        // float distance = Vector2.SqrMagnitude(_position - _destination);
 
         // if (distance > 0.025f)
         // {
@@ -96,12 +95,44 @@ public class Bubble : MonoBehaviour
         // }
 #endregion
 
-    
+    float distance = Vector2.SqrMagnitude(_position - _destination);
+
+    if (distance <= 0.01f)
+    {
+        ArriveDestination();
+    }
+
+    }
+
+    /// <summary>
+    /// Get Tilemap cell position
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 GetCellPosition()
+    {
+        return BuildingManager.instance.constructionLayer.tilemap.CellToWorld(BuildingManager.instance.constructionLayer.tilemap.WorldToCell(gameObject.transform.position));
     }
 
     public void SetDestination(Vector2 destination)
     {
         _destination = destination;
+    }
+
+    private void ArriveDestination()
+    {
+        // trigger local
+
+        // if nothing happened, calculate nre destination
+    }
+
+    private void Die()
+    {
+        
+    }
+
+    public static void Spawn()
+    {
+        Spawn(Vector2.zero, Vector2.zero);
     }
 
     /// <summary>
