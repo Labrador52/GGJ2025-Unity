@@ -60,7 +60,7 @@ public class BuildingManager : MonoBehaviour
 
         bool isValid = true;
 
-        Vector3 checkPoint = constructionLayer.tilemap.CellToWorld(constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1));
+        Vector3 checkPoint = constructionLayer.tilemap.CellToWorld(constructionLayer.tilemap.WorldToCell(_mousePosition));
 
         Collider2D hit = Physics2D.OverlapPoint(checkPoint);
         if (hit != null && hit.GetComponent<Tilemap>() != null)
@@ -76,11 +76,11 @@ public class BuildingManager : MonoBehaviour
 
         if (isValid && Input.GetMouseButtonDown(0))
         {
-            var currentTile = hit.GetComponent<Tilemap>().GetTile(constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1));
+            var currentTile = hit.GetComponent<Tilemap>().GetTile(constructionLayer.tilemap.WorldToCell(_mousePosition));
 
             constructionLayer.Build(_mousePosition, activeBuildable, direction, currentTile);
 
-            hit.GetComponent<Tilemap>().SetTile(constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1), null);
+            hit.GetComponent<Tilemap>().SetTile(constructionLayer.tilemap.WorldToCell(_mousePosition), null);
 
         }
     }

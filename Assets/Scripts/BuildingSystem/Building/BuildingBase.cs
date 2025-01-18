@@ -26,7 +26,7 @@ public class BuildingBase : MonoBehaviour
 
     public void SetBuildable(Buildable _buildable) => buildable = new Buildable(_buildable.buildableType, _buildable.coordinates, _buildable.direction, _buildable.gameObject);
 
-    protected virtual void RecoveryTile()
+    protected void RecoveryTile()
     {
         recoveryTilemap.SetTile(buildable.coordinates, tile);
     }
