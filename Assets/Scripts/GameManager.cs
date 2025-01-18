@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     }
 #endregion
 
+    [SerializeField] private GlobalCfgScriptObject _globalCfg;
+
     [SerializeField] private GameState _gameState;
     public static GameState GameState
     {
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-# region Singleton
+#region Singleton
         if (_instance == null)
         {
             _instance = this;
@@ -43,7 +45,9 @@ public class GameManager : MonoBehaviour
         }
 # endregion
 
+        ApplyGlobalConfig();
     }
+
 
     public void StartGame()
     {
@@ -61,6 +65,25 @@ public class GameManager : MonoBehaviour
         Application.Quit();
 #endif
     }
+    
+    private void ApplyGlobalConfig()
+    {
+        if (_globalCfg == null)
+        {
+            Debug.LogError("GlobalCfg is not assigned in the inspector");
+        }
+        else
+        {
+            // Set Trigger Range
+            Bubble.SetTriggerRange(TriggerType.Body, _globalCfg.TriggerBody);
+            Bubble.SetTriggerRange(TriggerType.Pickup, _globalCfg.TriggerPickup);
+            Bubble.SetTriggerRange(TriggerType.Fog, _globalCfg.TriggerFog);
+
+            // Set Buggle Height
+            Bubble.SetSolidHeight(_globalCfg.solidHeight);
+        }
+    }
+
 }
 
 public enum GameState
