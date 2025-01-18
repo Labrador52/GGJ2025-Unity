@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBuildingMode: 1
+  activeBuildable: {fileID: 11400000, guid: d75fa3c9a9bd5c44296677da14bb909c, type: 2}
   constructionLayer: {fileID: 7844791150642742374}
   previewLayer: {fileID: 7198946532102182319}
   direction: 0

@@ -15,7 +15,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         if (instance != null)
             Destroy(instance.gameObject);
@@ -113,8 +113,8 @@ public class BuildingManager : MonoBehaviour
             isValid = !MapManager.instance.IsOverlapFan(effectCoordinate);
         }
 
-        if (isValid)
-            isValid = Inventory.instance.CanRemoveItem(Inventory.instance.allMaterials[activeBuildable.buildingId]);
+        //if (isValid)
+        //    isValid = Inventory.instance.CanRemoveItem(Inventory.instance.allMaterials[activeBuildable.buildingId]);
 
         previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
     }
