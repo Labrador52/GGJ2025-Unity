@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GlobalConfig
   m_EditorClassIdentifier: 
   solidHeight: 1
-  TriggerBody: 0.5
+  TriggerBody: 0.1
   TriggerPickup: 1.5
   TriggerFog: 2.5
+  bubbleSpawnInterval: 100
