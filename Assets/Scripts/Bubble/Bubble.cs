@@ -24,7 +24,7 @@ public class Bubble : MonoBehaviour
 
     [SerializeField] public bool isFill;
 
-    [SerializeField] private int lifeLeft;
+    [SerializeField] public int lifeLeft;
 
     [SerializeField] private GameObject bubbleSpriteGameObject;
     [SerializeField] private GameObject bubbleShadowGameObject;
@@ -63,7 +63,7 @@ public class Bubble : MonoBehaviour
         AnimationDeltaTime = UnityEngine.Random.Range(0.0f, Mathf.PI * 2);
     
         velocity = 0.05f;
-        lifeLeft = 1200;
+        lifeLeft = 120000;
         energy = 8;
     }
 
@@ -145,6 +145,7 @@ public class Bubble : MonoBehaviour
         energy -= 1;
         energy = math.max(energy, 0);
 
+#region Check Fan Effect
         Vector3Int fanEffect = MapManager.instance.CheckFanEffectRange(transform.position);
         // check
 
@@ -157,34 +158,66 @@ public class Bubble : MonoBehaviour
             {
                 // facing = "BR";
                 isFacingRight = true;
-                isFacingRight = false;
+                isFacingFront = false;
             }
-            else if (fanEffect.x == -1)
+            else if (fanEffect.x == -7)
             {
                 // facing = "FL";
                 isFacingRight = false;
                 isFacingFront = true;
             }
-            else if (fanEffect.y == 1)
+            else if (fanEffect.y == 7)
             {
                 // facing = "FR";
-                isFacingRight = true;
-                isFacingFront = true;
+                isFacingRight = false;
+                isFacingFront = false;
             }
             else
             {
                 // facing = "BL";
-                isFacingRight = false;
-                isFacingFront = false;
+                isFacingRight = true;
+                isFacingFront = true;
             }
             
             energy = 16;
         }
+#endregion
 
+#region Check Pickup
+        if (MapManager.instance.IsGetMail(transform.position))
+        {
+        PickUp();
+        }
+
+#endregion
+
+#region Check Arrive
+        if (isFill)
+        {
+            if (MapManager.instance.IsArrive(transform.position))
+            {
+                // Debug.Log("Arrive!");
+                Gameplay.Instance.Win();
+                // Destroy(gameObject);
+                // return;
+            }
+        }
+
+#endregion
 
         _destination += new Vector2(isFacingRight? 0.5f: -0.5f, isFacingFront? -0.25f: 0.25f);
 
         velocity = (energy >= 4)? 0.05f: 0.025f;
+    }
+
+    private void PickUp()
+    {
+        // fill
+        if (isFill)
+        {
+            return;
+        }
+        isFill = true;
     }
 
     internal void Die()
@@ -211,6 +244,12 @@ public class Bubble : MonoBehaviour
         position += new Vector2(0.0f, 0.25f);
         // 实例化Bubble预制体
         GameObject bubble = Instantiate(PrefabManager.Instance.BubblePrefab, position, Quaternion.identity) as GameObject;
+        // set name as Bubble
+        bubble.name = "Bubble";
+        // set parent as Bubbles
+        bubble.transform.SetParent(GameObject.Find("Bubbles").transform);
+        //set Tag as Bubble
+        // bubble.tag = "Bubble";
         bubble.GetComponent<Bubble>().SetDestination(destination);
         // Set Father
         bubble.transform.SetParent(Gameplay.Instance.gameObject.transform);

@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour
         ApplyGlobalConfig();
     }
 
+    public void Start()
+    {
+        AudioManager.instance.PlayBGM();
+    }
 
     public void StartGame()
     {

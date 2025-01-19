@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx;
     [SerializeField] private AudioSource[] bgm;
 
-    public bool playBgm;
+    public bool playBgm = true;
     private int bgmIndex;
 
     private bool canPlaySFX;

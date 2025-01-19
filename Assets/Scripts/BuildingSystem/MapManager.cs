@@ -48,9 +48,9 @@ public class MapManager : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="level prefabÏÂµÄGrid¶ÔÏó"></param>
-    /// <param name="Ô¤ÖÆÌåtileInstantiat"></param>
-    /// <param name="ÈÎÒ»²ÝµØÍßÆ¬"></param>
+    /// <param name="level prefabï¿½Âµï¿½Gridï¿½ï¿½ï¿½ï¿½"></param>
+    /// <param name="Ô¤ï¿½ï¿½ï¿½ï¿½tileInstantiat"></param>
+    /// <param name="ï¿½ï¿½Ò»ï¿½Ýµï¿½ï¿½ï¿½Æ¬"></param>
     public void Initial(GameObject _Grid,GameObject _tileInstantiat, Tile _defaultTile)
     {
         tileInstantiate = _tileInstantiat;
@@ -95,7 +95,10 @@ public class MapManager : MonoBehaviour
         Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
 
         if (Vector3Int.Distance(bubbleCoordinate, gridInfo.bubbleMiddle) <= 1)
-            return true;
+        {
+            CloseTip();
+            return true;    
+        }
         return false;
     }
 
@@ -130,6 +133,16 @@ public class MapManager : MonoBehaviour
     }
 
     public void CloseTip() => gridInfo.tip.SetActive(false);
+
+    public void DeleteAllFan()
+    {
+        foreach(var coor in fanList.Keys)
+        {
+            fanList[coor].DestroySelf();
+            // fanList.Remove(coor);
+        }
+        fanList.Clear();
+    }
 
     public void RegisteredFan(Vector3Int _effectCoordinate,Fan _fan) => fanList.Add(_effectCoordinate, _fan);
 

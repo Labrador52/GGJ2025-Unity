@@ -9,6 +9,10 @@ public class Fan : BuildingBase
     {
         base.Start();
 
+        float zOffset = currentConstructionLayer.tilemap.CellToWorld(buildable.coordinates).x + currentConstructionLayer.tilemap.CellToWorld(buildable.coordinates).y;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, -zOffset);
+
         recoveryTilemap = MapManager.instance.mountain;
         animator = GetComponentInChildren<Animator>();
 
@@ -43,5 +47,7 @@ public class Fan : BuildingBase
     }
 
     public Vector3Int FanLogic() => GetDirectionVector(buildable.direction) * effectLength;
+
+    public void DestroySelf() => Destroy(gameObject);
 
 }

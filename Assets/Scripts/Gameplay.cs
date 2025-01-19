@@ -26,7 +26,10 @@ public class Gameplay : MonoBehaviour
     [SerializeField] private int _bubbleSpawnWaiting;
 
     [SerializeField] private GameObject gameplayCanvas;
+    [SerializeField] private GameObject winPage;
+    [SerializeField] private int currentLevel;
 
+    [SerializeField] private GameObject bubbles;
     private void Awake()
     {
         if (_instance == null)
@@ -59,13 +62,13 @@ public class Gameplay : MonoBehaviour
     {
         Debug.Log("Game Started");
         LoadLevel(0);
-        FogOfWarManager.Instance.CreateFog();
+        // FogOfWarManager.Instance.CreateFog();
         StartMenu.Instance.gameObject.SetActive(false);
 
         // Enable Gameplay UI
         gameplayCanvas.SetActive(true);
-
-        isPlaying = true;
+        FogOfWarManager.Instance.CreateFog();
+        
     }
 
     [ContextMenu("Restart Game")]
@@ -88,21 +91,85 @@ public class Gameplay : MonoBehaviour
         // Disable Gameplay UI
         gameplayCanvas.SetActive(false);
     }
+
+    [ContextMenu("Win")]
+    public void Win()
+    {
+        Debug.Log("Game Win");
+        isPlaying = false;
+
+        // Show Win UI
+        winPage.SetActive(true); 
+
+        // destory current level
+        // DeleteLevel();
+        // load next level
+        // LoadLevel(1);
+    }
 #endregion
 
 #region Level Controls
     [ContextMenu("Load Level")]
     public void LoadLevel(int levelNumber)
     {
+        currentLevel = levelNumber;
         Debug.Log("Level Loaded");
         InitializeLevel(levelNumber);
         // reset camera position
-        CameraController.Instance.ResetPosition(MapManager.instance.GetBeginWorldCoordinate());
+        CameraController.Instance.ResetPosition(GetLevelStartPosition(levelNumber));
+
+
+        _bubbleSpawnWaiting = 80;
+
+        isPlaying = true;
     }
+
+    public void LoadNextLevel()
+    {
+        currentLevel += 1;
+        if (currentLevel >= 3)
+        {
+            Debug.LogError("No more levels");
+            return;
+            // show introduce page
+
+        }
+        DeleteLevel();
+        LoadLevel(currentLevel);
+        FogOfWarManager.Instance.CreateFog();
+        // disable win page
+        winPage.SetActive(false);
+    }
+
+    private Vector3 GetLevelStartPosition(int levelNumber)
+    {
+        switch (levelNumber)
+        {
+            case 0:
+                return new Vector3(-12.5f, -4.5f, -10.0f);
+            case 1:
+                return new Vector3(-12.5f, -4.5f, -10.0f);
+            case 2:
+                return new Vector3(-12.5f, -4.5f, -10.0f);
+            case 3:
+                return new Vector3(-12.5f, -4.5f, -10.0f);
+            case 4:
+                return new Vector3(-12.5f, -4.5f, -10.0f);
+        }
+        return new Vector3(0.0f, 0.0f, -10.0f);
+    }
+    
 
     [ContextMenu("Delete Level")]
     public void DeleteLevel()
     {
+        // DeleteFan();
+        MapManager.instance.DeleteAllFan();
+        Destroy(bubbles);
+        bubbles = new GameObject("Bubbles");
+
+        bubbles.transform.SetParent(gameObject.transform);
+        
         Debug.Log("Level Deleted");
         // destory current level
         GameObject levelGameObject = GameObject.Find("Level");
@@ -110,8 +177,22 @@ public class Gameplay : MonoBehaviour
         {
             Destroy(levelGameObject);
         }
+        
+
     }
 #endregion
+
+    // Delete Fan (clone) Gameobjects
+    // public void DeleteFan()
+    // {
+
+    // }
+
+    // reload Scene
+    public void ReloadScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
 
     private void InitializeLevel(int level)
     {

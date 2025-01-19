@@ -15,9 +15,9 @@ MonoBehaviour:
   buildingId: 0
   buildingName: "\u98CE\u6247"
   previewSprites:
-  - {fileID: -1430450393, guid: 1bbb542f69859e744aa9e6a18d50f4a5, type: 3}
-  - {fileID: -840606612, guid: 1bbb542f69859e744aa9e6a18d50f4a5, type: 3}
-  - {fileID: -873658090, guid: 1bbb542f69859e744aa9e6a18d50f4a5, type: 3}
-  - {fileID: -1571586614, guid: 1bbb542f69859e744aa9e6a18d50f4a5, type: 3}
+  - {fileID: 21300000, guid: ec7d20ea0061be74c966f243833684ab, type: 3}
+  - {fileID: 21300000, guid: 3dcd782627f4c814e86a5e657cffff7d, type: 3}
+  - {fileID: 21300000, guid: e189dce9496bd8d4c8136fb33d0297e6, type: 3}
+  - {fileID: 21300000, guid: ed513c645475dad47ba2335a2e52a4cc, type: 3}
   buildingPrefab: {fileID: 1175833323458899550, guid: 17daae4ff0e727c47b6c884007bac19a, type: 3}
   buildingDescription: 
