@@ -147,6 +147,9 @@ public class Bubble : MonoBehaviour
 
         Vector3Int fanEffect = MapManager.instance.CheckFanEffectRange(GetCellPosition());
         // check
+
+        Debug.Log("Fan Effect: " + fanEffect);
+
         if (fanEffect != Vector3.zero)
         {
             // string facing;
@@ -174,7 +177,7 @@ public class Bubble : MonoBehaviour
                 isFacingRight = false;
                 isFacingFront = false;
             }
-
+            
             energy = 8;
         }
 

@@ -413,7 +413,7 @@ MonoBehaviour:
   _destination: {x: 0, y: 0}
   energy: 0
   velocity: 0
-  isFacingRight: 0
+  isFacingRight: 1
   isFacingFront: 0
   isFill: 0
   lifeLeft: 0

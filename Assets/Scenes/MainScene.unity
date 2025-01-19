@@ -3855,6 +3855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSpawnBubble: {fileID: 1036338799}
+  buildMode: {fileID: 937255680}
 --- !u!114 &1874573730
 MonoBehaviour:
   m_ObjectHideFlags: 0
