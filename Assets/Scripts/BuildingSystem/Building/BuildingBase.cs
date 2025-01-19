@@ -28,6 +28,6 @@ public class BuildingBase : MonoBehaviour
 
     protected void RecoveryTile()
     {
-        recoveryTilemap.SetTile(buildable.coordinates + new Vector3Int(1, 1), tile);
+        recoveryTilemap.SetTile(buildable.coordinates, tile);
     }
 }

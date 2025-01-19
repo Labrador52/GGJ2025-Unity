@@ -36,6 +36,15 @@ public class MapManager : MonoBehaviour
         InitialMap();
     }
 
+    //private void Update()
+    //{
+    //    foreach(var coor in fanList.Keys)
+    //    {
+    //        Debug.Log(coor);
+    //    }
+    //    Debug.Log("end");
+    //}
+
     /// <summary>
     /// 
     /// </summary>
@@ -112,9 +121,12 @@ public class MapManager : MonoBehaviour
     {
         Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
 
+        //Debug.Log("bubbleCoordinate:" + bubbleCoordinate);
+
         foreach(var coor in fanList.Keys)
         {
-            if(coor == bubbleCoordinate)
+            //Debug.Log("coordinate:" + coor);
+            if (coor == bubbleCoordinate)
                 return fanList[coor].FanLogic();
         }
 

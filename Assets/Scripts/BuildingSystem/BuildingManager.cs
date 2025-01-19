@@ -27,7 +27,7 @@ public class BuildingManager : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
 
-        //Debug.Log(constructionLayer.tilemap.WorldToCell(mousePosition));
+        //Debug.Log("ЪѓБъзјБъЃК" + constructionLayer.tilemap.WorldToCell(mousePosition));
 
         if (constructionLayer == null)
             return;

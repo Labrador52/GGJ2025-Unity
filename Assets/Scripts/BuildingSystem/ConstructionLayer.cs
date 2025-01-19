@@ -14,9 +14,9 @@ public class ConstructionLayer : TileMapLayer
 
         Vector3 zOffset = new Vector3(0, 0, coordinates.x + coordinates.y);
 
-        GameObject itemObject = Instantiate(_item.buildingPrefab, tilemap.CellToWorld(coordinates + new Vector3Int(1, 1)) + BuildingManager.instance.offset + zOffset, Quaternion.identity, buildParent);
+        GameObject itemObject = Instantiate(_item.buildingPrefab, tilemap.CellToWorld(coordinates + new Vector3Int(1, 1)) + BuildingManager.instance.offset + zOffset + new Vector3(0, 0, 20), Quaternion.identity, buildParent);
 
-        Buildable buildable = new Buildable(_item, coordinates, BuildingManager.instance.direction, itemObject);
+        Buildable buildable = new Buildable(_item, coordinates + new Vector3Int(1, 1), BuildingManager.instance.direction, itemObject);
         BuildingBase itemScript = itemObject.GetComponent<BuildingBase>();
 
         itemScript.SetBuildable(buildable);
