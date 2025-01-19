@@ -95,7 +95,10 @@ public class MapManager : MonoBehaviour
         Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
 
         if (Vector3Int.Distance(bubbleCoordinate, gridInfo.bubbleMiddle) <= 1)
-            return true;
+        {
+            CloseTip();
+            return true;    
+        }
         return false;
     }
 
