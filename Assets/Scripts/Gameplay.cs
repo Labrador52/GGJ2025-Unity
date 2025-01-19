@@ -164,6 +164,7 @@ public class Gameplay : MonoBehaviour
     public void DeleteLevel()
     {
         // DeleteFan();
+        MapManager.instance.DeleteAllFan();
         Debug.Log("Level Deleted");
         // destory current level
         GameObject levelGameObject = GameObject.Find("Level");
