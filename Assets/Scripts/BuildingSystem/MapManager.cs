@@ -90,6 +90,24 @@ public class MapManager : MonoBehaviour
     public Vector3 GetBeginWorldCoordinate() => gridInfo.beginWorldCoor;
     public Vector3 GetMiddleWorldCoordinate() => gridInfo.middleWorldCoor;
 
+    public bool IsGetMail(Vector3 _position)
+    {
+        Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
+
+        if (Vector3Int.Distance(bubbleCoordinate, gridInfo.bubbleMiddle) <= 1)
+            return true;
+        return false;
+    }
+
+    public bool IsArrive(Vector3 _position)
+    {
+        Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
+
+        if (Vector3Int.Distance(bubbleCoordinate, gridInfo.bubbleEnd) <= 1)
+            return true;
+        return false;
+    }
+
     private void InitialMap()
     {
         for (int i = -maxLength / 2; i < maxLength / 2; i++) 
