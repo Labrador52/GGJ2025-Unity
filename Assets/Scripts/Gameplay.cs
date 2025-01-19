@@ -97,7 +97,7 @@ public class Gameplay : MonoBehaviour
         Debug.Log("Level Loaded");
         InitializeLevel(levelNumber);
         // reset camera position
-        CameraController.Instance.ResetPosition();
+        CameraController.Instance.ResetPosition(MapManager.instance.GetBeginWorldCoordinate());
     }
 
     [ContextMenu("Delete Level")]

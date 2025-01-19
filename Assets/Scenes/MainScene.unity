@@ -621,7 +621,7 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -1695464550, guid: 026d95724cabd3b42835d579499d9e0b, type: 3}
+    m_HighlightedSprite: {fileID: 2119089552, guid: 369923f884d95204e85c78ec2607fcf3, type: 3}
     m_PressedSprite: {fileID: 2119089552, guid: 369923f884d95204e85c78ec2607fcf3, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -1305,7 +1305,7 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -1260248936, guid: d47cabcd274fc5443957efd0889bd198, type: 3}
+    m_HighlightedSprite: {fileID: 2119304289, guid: 6cde1070795ebc4428c9608cb31a8123, type: 3}
     m_PressedSprite: {fileID: 2119304289, guid: 6cde1070795ebc4428c9608cb31a8123, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -1922,7 +1922,7 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -1037701091, guid: 63b4438532f9b164186f1865ab633ec5, type: 3}
+    m_HighlightedSprite: {fileID: -1819166049, guid: 5ba3a64a0c998bc40aa850f3e28fd825, type: 3}
     m_PressedSprite: {fileID: -1819166049, guid: 5ba3a64a0c998bc40aa850f3e28fd825, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
@@ -2524,6 +2524,7 @@ GameObject:
   - component: {fileID: 1164746693}
   - component: {fileID: 1164746695}
   - component: {fileID: 1164746694}
+  - component: {fileID: 1164746696}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -2588,6 +2589,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1164746692}
   m_CullTransparentMesh: 1
+--- !u!114 &1164746696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164746692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba3bb5d37a81164288b884c41c4e523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  floatSpeed: 0.6
+  floatHeight: 25
 --- !u!1 &1258360648
 GameObject:
   m_ObjectHideFlags: 0
