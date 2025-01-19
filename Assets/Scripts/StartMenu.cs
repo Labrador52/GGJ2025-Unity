@@ -34,8 +34,12 @@ public class StartMenu : MonoBehaviour
         }
 
         buttonStartGame.onClick.AddListener(Gameplay.Instance.StartGame);
-        // buttonAbout.onClick.AddListener(About);
         buttonQuit.onClick.AddListener(GameManager.Quit);
+
+        buttonStartGame.onClick.AddListener(PlayButtonSFX);
+        buttonAbout.onClick.AddListener(PlayButtonSFX);
+        buttonQuit.onClick.AddListener(PlayButtonSFX);
+
 
         if (GameManager.GameState == GameState.StartMenu)
         {
@@ -46,5 +50,10 @@ public class StartMenu : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private void PlayButtonSFX()
+    {
+        AudioManager.instance.PlaySFX(2);
     }
 }
