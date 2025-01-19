@@ -63,7 +63,7 @@ public class Bubble : MonoBehaviour
         AnimationDeltaTime = UnityEngine.Random.Range(0.0f, Mathf.PI * 2);
     
         velocity = 0.05f;
-        lifeLeft = 1200;
+        lifeLeft = 120000;
         energy = 8;
     }
 
