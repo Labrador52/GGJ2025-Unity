@@ -145,7 +145,7 @@ public class Bubble : MonoBehaviour
         energy -= 1;
         energy = math.max(energy, 0);
 
-        Vector3Int fanEffect = MapManager.instance.CheckFanEffectRange(GetCellPosition());
+        Vector3Int fanEffect = MapManager.instance.CheckFanEffectRange(transform.position);
         // check
 
         Debug.Log("Fan Effect: " + fanEffect);
@@ -178,11 +178,11 @@ public class Bubble : MonoBehaviour
                 isFacingFront = false;
             }
             
-            energy = 8;
+            energy = 16;
         }
 
 
-        _destination += new Vector2(isFacingRight? 1.0f: -1.0f, isFacingFront? -0.5f: 0.5f);
+        _destination += new Vector2(isFacingRight? 0.5f: -0.5f, isFacingFront? -0.25f: 0.25f);
 
         velocity = (energy >= 4)? 0.05f: 0.025f;
     }
@@ -194,12 +194,12 @@ public class Bubble : MonoBehaviour
 
     public static void Spawn()
     {
-        Spawn(Vector2.zero, new Vector2(-1.0f, 0.5f));
+        Spawn(Vector2.zero, new Vector2(0.5f, 0.25f));
     }
 
     public static void Spawn(Vector2 position)
     {
-        Spawn(position, new Vector2(-1.0f, 0.5f));
+        Spawn(position, new Vector2(0.5f, 0.25f));
     }
 
     /// <summary>
@@ -216,7 +216,7 @@ public class Bubble : MonoBehaviour
         bubble.transform.SetParent(Gameplay.Instance.gameObject.transform);
         // _position = position;
         // Set the position of the Buggle
-        bubble.GetComponent<Bubble>()._destination = position + new Vector2(1.0f, 0.5f);
+        bubble.GetComponent<Bubble>()._destination = position + new Vector2(0.5f, 0.25f);
     }
 
     /// <summary>
