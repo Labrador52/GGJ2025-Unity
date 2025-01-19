@@ -118,4 +118,10 @@ public class BuildingManager : MonoBehaviour
 
         previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
     }
+
+    public void EnterBuildingMode(int _buildId)
+    {
+        activeBuildable = allBuildable[_buildId];
+        isBuildingMode = true;
+    }
 }
