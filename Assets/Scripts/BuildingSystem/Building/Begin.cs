@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Begin : MonoBehaviour
 {
-    private float timer = 0;
+    private float timer = 0.6f;
     private float time = 2;
     private Animator animator;
 

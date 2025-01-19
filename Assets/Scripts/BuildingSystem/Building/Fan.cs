@@ -9,6 +9,10 @@ public class Fan : BuildingBase
     {
         base.Start();
 
+        float zOffset = currentConstructionLayer.tilemap.CellToWorld(buildable.coordinates).x + currentConstructionLayer.tilemap.CellToWorld(buildable.coordinates).y;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, -zOffset);
+
         recoveryTilemap = MapManager.instance.mountain;
         animator = GetComponentInChildren<Animator>();
 
