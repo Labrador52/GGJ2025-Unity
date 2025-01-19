@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943d91842fc365645bc56d75e78b3cf5, type: 3}
   m_Name: GlobalConfig
   m_EditorClassIdentifier: 
-  solidHeight: 1
+  solidHeight: 0.6
   TriggerBody: 0.1
   TriggerPickup: 1.5
   TriggerFog: 2.5
