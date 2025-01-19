@@ -17,7 +17,7 @@ public class Fan : BuildingBase
         RecoveryTile();
         effectZone = buildable.coordinates + GetDirectionVector(buildable.direction);
 
-        //MapManager.instance.RegisteredFan(effectZone, this);
+        MapManager.instance.RegisteredFan(effectZone, this);
     }
 
     public static Vector3Int GetDirectionVector(int _direction)

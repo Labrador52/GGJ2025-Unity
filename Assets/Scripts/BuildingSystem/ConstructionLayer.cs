@@ -26,6 +26,7 @@ public class ConstructionLayer : TileMapLayer
         buildables.Add(coordinates, buildable);
         BuildingManager.instance.isBuildingMode = false;
 
+        AudioManager.instance.PlaySFX(1);
         //Inventory.instance.RemoveItem(Inventory.instance.allMaterials[_item.buildingId]);
     }
 
