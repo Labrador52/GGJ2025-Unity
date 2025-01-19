@@ -48,4 +48,6 @@ public class Fan : BuildingBase
 
     public Vector3Int FanLogic() => GetDirectionVector(buildable.direction) * effectLength;
 
+    public void DestroySelf() => Destroy(gameObject);
+
 }

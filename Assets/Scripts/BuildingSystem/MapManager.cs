@@ -134,6 +134,16 @@ public class MapManager : MonoBehaviour
 
     public void CloseTip() => gridInfo.tip.SetActive(false);
 
+    public void DeleteAllFan()
+    {
+        foreach(var coor in fanList.Keys)
+        {
+            fanList[coor].DestroySelf();
+            fanList.Remove(coor);
+        }
+        fanList.Clear();
+    }
+
     public void RegisteredFan(Vector3Int _effectCoordinate,Fan _fan) => fanList.Add(_effectCoordinate, _fan);
 
     public bool IsOverlapFan(Vector3Int _effectCoordinate) => fanList.ContainsKey(_effectCoordinate);
