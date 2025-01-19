@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        // Move the camera forward
+        // Move the camera
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -60,6 +61,18 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             mainCamera.transform.position += mainCamera.transform.right * cameraMoveSpeed * Time.deltaTime;
+        }
+
+        // set Camera Size
+
+        float scrollDelta = Input.GetAxis("Mouse ScrollWheel"); // 获取滚轮滚动值
+
+        if (scrollDelta != 0)
+        {
+            mainCamera.orthographicSize -= scrollDelta * 2.0f; // 改变正交尺寸
+
+            // 限制缩放范围
+            mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, 3.0f, 10.0f);
         }
     }
 
