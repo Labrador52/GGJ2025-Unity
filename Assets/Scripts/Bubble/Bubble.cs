@@ -246,7 +246,8 @@ public class Bubble : MonoBehaviour
         GameObject bubble = Instantiate(PrefabManager.Instance.BubblePrefab, position, Quaternion.identity) as GameObject;
         // set name as Bubble
         bubble.name = "Bubble";
-
+        // set parent as Bubbles
+        bubble.transform.SetParent(GameObject.Find("Bubbles").transform);
         //set Tag as Bubble
         // bubble.tag = "Bubble";
         bubble.GetComponent<Bubble>().SetDestination(destination);

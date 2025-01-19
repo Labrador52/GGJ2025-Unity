@@ -165,6 +165,11 @@ public class Gameplay : MonoBehaviour
     {
         // DeleteFan();
         MapManager.instance.DeleteAllFan();
+        Destroy(bubbles);
+        bubbles = new GameObject("Bubbles");
+
+        bubbles.transform.SetParent(gameObject.transform);
+        
         Debug.Log("Level Deleted");
         // destory current level
         GameObject levelGameObject = GameObject.Find("Level");
