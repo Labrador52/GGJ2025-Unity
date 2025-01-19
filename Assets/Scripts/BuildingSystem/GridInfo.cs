@@ -5,8 +5,8 @@ using UnityEngine;
 public class GridInfo : MonoBehaviour
 {
     [SerializeField] private Vector3Int bubbleBegin;
-    [SerializeField] private Vector3Int bubbleEnd;
-    [SerializeField] private Vector3Int bubbleMiddle;
+    [SerializeField] public Vector3Int bubbleEnd;
+    [SerializeField] public Vector3Int bubbleMiddle;
 
     public GameObject tip;
     [HideInInspector] public Vector3 beginWorldCoor;
