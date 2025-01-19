@@ -15,7 +15,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Awake()
     {
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
 
         if (instance != null)
             Destroy(instance.gameObject);
