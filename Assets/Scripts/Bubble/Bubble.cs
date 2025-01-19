@@ -24,7 +24,7 @@ public class Bubble : MonoBehaviour
 
     [SerializeField] public bool isFill;
 
-    [SerializeField] private int lifeLeft;
+    [SerializeField] public int lifeLeft;
 
     [SerializeField] private GameObject bubbleSpriteGameObject;
     [SerializeField] private GameObject bubbleShadowGameObject;
@@ -244,6 +244,11 @@ public class Bubble : MonoBehaviour
         position += new Vector2(0.0f, 0.25f);
         // 实例化Bubble预制体
         GameObject bubble = Instantiate(PrefabManager.Instance.BubblePrefab, position, Quaternion.identity) as GameObject;
+        // set name as Bubble
+        bubble.name = "Bubble";
+
+        //set Tag as Bubble
+        // bubble.tag = "Bubble";
         bubble.GetComponent<Bubble>().SetDestination(destination);
         // Set Father
         bubble.transform.SetParent(Gameplay.Instance.gameObject.transform);

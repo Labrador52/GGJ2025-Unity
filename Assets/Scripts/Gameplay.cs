@@ -29,6 +29,7 @@ public class Gameplay : MonoBehaviour
     [SerializeField] private GameObject winPage;
     [SerializeField] private int currentLevel;
 
+    [SerializeField] private GameObject bubbles;
     private void Awake()
     {
         if (_instance == null)
@@ -66,7 +67,7 @@ public class Gameplay : MonoBehaviour
 
         // Enable Gameplay UI
         gameplayCanvas.SetActive(true);
-
+        FogOfWarManager.Instance.CreateFog();
         
     }
 
@@ -116,7 +117,7 @@ public class Gameplay : MonoBehaviour
         InitializeLevel(levelNumber);
         // reset camera position
         CameraController.Instance.ResetPosition(GetLevelStartPosition(levelNumber));
-        FogOfWarManager.Instance.CreateFog();
+
 
         _bubbleSpawnWaiting = 80;
 
@@ -135,6 +136,7 @@ public class Gameplay : MonoBehaviour
         }
         DeleteLevel();
         LoadLevel(currentLevel);
+        FogOfWarManager.Instance.CreateFog();
         // disable win page
         winPage.SetActive(false);
     }
@@ -161,6 +163,7 @@ public class Gameplay : MonoBehaviour
     [ContextMenu("Delete Level")]
     public void DeleteLevel()
     {
+        // DeleteFan();
         Debug.Log("Level Deleted");
         // destory current level
         GameObject levelGameObject = GameObject.Find("Level");
@@ -168,8 +171,22 @@ public class Gameplay : MonoBehaviour
         {
             Destroy(levelGameObject);
         }
+        
+
     }
 #endregion
+
+    // Delete Fan (clone) Gameobjects
+    // public void DeleteFan()
+    // {
+
+    // }
+
+    // reload Scene
+    public void ReloadScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
 
     private void InitializeLevel(int level)
     {
