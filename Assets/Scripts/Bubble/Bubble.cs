@@ -64,6 +64,7 @@ public class Bubble : MonoBehaviour
     
         velocity = 0.05f;
         lifeLeft = 1200;
+        energy = 8;
     }
 
     private void Update()
@@ -130,7 +131,7 @@ public class Bubble : MonoBehaviour
     /// <returns></returns>
     private Vector3 GetCellPosition()
     {
-        return BuildingManager.instance.constructionLayer.tilemap.CellToWorld(BuildingManager.instance.constructionLayer.tilemap.WorldToCell(gameObject.transform.position));
+        return BuildingManager.instance.constructionLayer.tilemap.WorldToCell(transform.position);
     }
 
     public void SetDestination(Vector2 destination)
@@ -144,7 +145,42 @@ public class Bubble : MonoBehaviour
         energy -= 1;
         energy = math.max(energy, 0);
 
+        Vector3Int fanEffect = MapManager.instance.CheckFanEffectRange(GetCellPosition());
         // check
+
+        Debug.Log("Fan Effect: " + fanEffect);
+
+        if (fanEffect != Vector3.zero)
+        {
+            // string facing;
+            if (fanEffect.x == 7)
+            {
+                // facing = "BR";
+                isFacingRight = true;
+                isFacingRight = false;
+            }
+            else if (fanEffect.x == -1)
+            {
+                // facing = "FL";
+                isFacingRight = false;
+                isFacingFront = true;
+            }
+            else if (fanEffect.y == 1)
+            {
+                // facing = "FR";
+                isFacingRight = true;
+                isFacingFront = true;
+            }
+            else
+            {
+                // facing = "BL";
+                isFacingRight = false;
+                isFacingFront = false;
+            }
+            
+            energy = 8;
+        }
+
 
         _destination += new Vector2(isFacingRight? 1.0f: -1.0f, isFacingFront? -0.5f: 0.5f);
 
@@ -180,6 +216,7 @@ public class Bubble : MonoBehaviour
         bubble.transform.SetParent(Gameplay.Instance.gameObject.transform);
         // _position = position;
         // Set the position of the Buggle
+        bubble.GetComponent<Bubble>()._destination = position + new Vector2(1.0f, 0.5f);
     }
 
     /// <summary>

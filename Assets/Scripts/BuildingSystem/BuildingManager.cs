@@ -15,7 +15,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Awake()
     {
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
 
         if (instance != null)
             Destroy(instance.gameObject);
@@ -27,7 +27,7 @@ public class BuildingManager : MonoBehaviour
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
 
-        //Debug.Log(constructionLayer.tilemap.WorldToCell(mousePosition));
+        //Debug.Log("ЪѓБъзјБъЃК" + constructionLayer.tilemap.WorldToCell(mousePosition));
 
         if (constructionLayer == null)
             return;
@@ -117,5 +117,11 @@ public class BuildingManager : MonoBehaviour
         //    isValid = Inventory.instance.CanRemoveItem(Inventory.instance.allMaterials[activeBuildable.buildingId]);
 
         previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
+    }
+
+    public void EnterBuildingMode(int _buildId)
+    {
+        activeBuildable = allBuildable[_buildId];
+        isBuildingMode = true;
     }
 }

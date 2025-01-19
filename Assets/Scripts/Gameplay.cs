@@ -21,9 +21,11 @@ public class Gameplay : MonoBehaviour
     }
 #endregion
 
-    [SerializeField] private bool isPlaying;
+    [SerializeField] public bool isPlaying;
     [SerializeField] private int _bubbleSpawnInterval;
     [SerializeField] private int _bubbleSpawnWaiting;
+
+    [SerializeField] private GameObject gameplayCanvas;
 
     private void Awake()
     {
@@ -60,6 +62,9 @@ public class Gameplay : MonoBehaviour
         FogOfWarManager.Instance.CreateFog();
         StartMenu.Instance.gameObject.SetActive(false);
 
+        // Enable Gameplay UI
+        gameplayCanvas.SetActive(true);
+
         isPlaying = true;
     }
 
@@ -76,6 +81,12 @@ public class Gameplay : MonoBehaviour
     {
         Debug.Log("Game Ended");
         isPlaying = false;
+        // destory current level
+        DeleteLevel();
+        // load start menu
+        StartMenu.Instance.gameObject.SetActive(true);
+        // Disable Gameplay UI
+        gameplayCanvas.SetActive(false);
     }
 #endregion
 
@@ -85,6 +96,20 @@ public class Gameplay : MonoBehaviour
     {
         Debug.Log("Level Loaded");
         InitializeLevel(levelNumber);
+        // reset camera position
+        CameraController.Instance.ResetPosition(MapManager.instance.GetBeginWorldCoordinate());
+    }
+
+    [ContextMenu("Delete Level")]
+    public void DeleteLevel()
+    {
+        Debug.Log("Level Deleted");
+        // destory current level
+        GameObject levelGameObject = GameObject.Find("Level");
+        if (levelGameObject != null)
+        {
+            Destroy(levelGameObject);
+        }
     }
 #endregion
 
@@ -92,11 +117,15 @@ public class Gameplay : MonoBehaviour
     {
 
         GameObject levelGameObject = Instantiate(PrefabManager.Instance.LevelPrefabs[level], gameObject.transform);
+        // set name as Level
+        levelGameObject.name = "Level";
         levelGameObject.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
         GameObject gridGameObject = levelGameObject.transform.Find("Grid").gameObject;
         // Debug.Log(gridGameObject);
         List<BuildableItem> allBuildale;
         allBuildale = PrefabManager.AllBuildable;
+
+        // Initialize the managers by fyns
         BuildingManager.instance.Initial(gridGameObject, allBuildale);
 
         MapManager.instance.Initial(gridGameObject, PrefabManager.TileInstantiat, PrefabManager.Tile);

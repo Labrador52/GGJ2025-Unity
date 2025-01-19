@@ -4,45 +4,94 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-#region Singleton
-    private static AudioManager _instance;
-    public static AudioManager Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
-#endregion
+    public static AudioManager instance;
+
+    [SerializeField] private AudioSource[] sfx;
+    [SerializeField] private AudioSource[] bgm;
+
+    public bool playBgm;
+    private int bgmIndex;
+
+    private bool canPlaySFX;
 
     private void Awake()
     {
-#region Singleton
-        if (_instance == null)
-        {
-            _instance = this;
-        }
+        if (instance != null)
+            Destroy(instance.gameObject);
+        else
+            instance = this;
+
+        Invoke("AllowSFX", 1f);
+    }
+
+    private void Update()
+    {
+        if (!playBgm)
+            StopAllBGM();
         else
         {
-            Destroy(gameObject);
-            return;
+            if (!bgm[bgmIndex].isPlaying)
+                PlayBGM(bgmIndex);
         }
-#endregion
-
     }
 
-    // play sound effect
-    public void PlaySoundEffect(AudioClip clip)
+    public void PlaySFX(int _sfxIndex)
     {
-        AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
+        if (!canPlaySFX)
+            return;
+
+        if (_sfxIndex < sfx.Length)
+        {
+            sfx[_sfxIndex].pitch = Random.Range(0.85f, 1.1f);
+            sfx[_sfxIndex].Play();
+        }
     }
 
-    // play background music // need fix
-    public void PlayBackgroundMusic(AudioClip clip)
+    public void StopSFX(int _sfxIndex) => sfx[_sfxIndex].Stop();
+
+    public void PlayBGM(int _bgmIndex = 0)
     {
-        AudioSource audioSource = Camera.main.GetComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.loop = true;
-        audioSource.Play();
+        bgmIndex = _bgmIndex;
+
+        StopAllBGM();
+
+        bgm[bgmIndex].Play();
+    }
+
+    public void StopAllBGM()
+    {
+        for (int i = 0; i < bgm.Length; i++)
+        {
+            bgm[i].Stop();
+        }
+    }
+
+    public void PlayRandomBGM()
+    {
+        bgmIndex = Random.Range(0, bgm.Length);
+        PlayBGM(bgmIndex);
+    }
+
+    private void AllowSFX() => canPlaySFX = true;
+
+    public void StopSFXWithTime(int _index) => StartCoroutine(DecreaseVolume(sfx[_index]));
+
+
+    private IEnumerator DecreaseVolume(AudioSource _audio)
+    {
+        float defaultVolume = _audio.volume;
+
+        while (_audio.volume > 0.1f)
+        {
+            _audio.volume -= _audio.volume * 0.2f;
+            yield return new WaitForSeconds(0.25f);
+
+            if (_audio.volume <= 0.1f)
+            {
+                _audio.Stop();
+                _audio.volume = defaultVolume;
+                break;
+            }
+        }
     }
 }
