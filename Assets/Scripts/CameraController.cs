@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    private static CameraController _instance;
+    public static CameraController Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = GameObject.Find("Camera Controller").GetComponent<CameraController>();  // 后续在一个初始化方法中初始化所有单例
+            }
+            return _instance;
+        }
+    }
     [SerializeField] private GameObject cameraGameObject;
     private Camera mainCamera;
+    [SerializeField] private float cameraMoveSpeed = 5.0f;    // Camera move speed, unit: m/s
 
     private void Awake()
     {
@@ -15,5 +28,50 @@ public class CameraController : MonoBehaviour
             return;
         }
         mainCamera = cameraGameObject.GetComponent<Camera>();
+    }
+
+    private void Update()
+    {
+        if (mainCamera == null)
+        {
+            Debug.LogError("Camera component is not found in the camera GameObject");
+            return;
+        }
+
+        if (Gameplay.Instance.isPlaying == false)
+        {
+            return;
+        }
+
+        // Move the camera forward
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            mainCamera.transform.position += mainCamera.transform.up * cameraMoveSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            mainCamera.transform.position -= mainCamera.transform.up * cameraMoveSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            mainCamera.transform.position -= mainCamera.transform.right * cameraMoveSpeed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            mainCamera.transform.position += mainCamera.transform.right * cameraMoveSpeed * Time.deltaTime;
+        }
+    }
+
+    public void SetSpeed(float speed)
+    {
+        // Set the camera move speed
+        cameraMoveSpeed = speed;
+
+    }
+
+    public void ResetPosition()
+    {
+        gameObject.transform.position = new Vector3(0, 0, -10);
     }
 }

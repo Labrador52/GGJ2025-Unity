@@ -15,5 +15,7 @@ public class GlobalCfgScriptObject : ScriptableObject
 
     [Header("Gameplay Config")]
     public int bubbleSpawnInterval = 100;
+    [Range(0.001f, 100.0f)]
+    public float cameraMoveSpeed = 5.0f;    // Camera move speed, unit: m/s
 
 }

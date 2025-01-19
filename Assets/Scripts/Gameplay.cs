@@ -21,7 +21,7 @@ public class Gameplay : MonoBehaviour
     }
 #endregion
 
-    [SerializeField] private bool isPlaying;
+    [SerializeField] public bool isPlaying;
     [SerializeField] private int _bubbleSpawnInterval;
     [SerializeField] private int _bubbleSpawnWaiting;
 
@@ -85,6 +85,8 @@ public class Gameplay : MonoBehaviour
     {
         Debug.Log("Level Loaded");
         InitializeLevel(levelNumber);
+        // reset camera position
+        CameraController.Instance.ResetPosition();
     }
 #endregion
 
