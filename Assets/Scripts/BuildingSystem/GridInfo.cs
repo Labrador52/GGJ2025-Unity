@@ -19,9 +19,9 @@ public class GridInfo : MonoBehaviour
 
     private void Start()
     {
-        bubbleBegin = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(begin.position);
+        bubbleBegin = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(begin.position) + new Vector3Int(1, 1);
         bubbleMiddle = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(middle.position);
-        bubbleEnd = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(end.position);
+        bubbleEnd = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(end.position) + new Vector3Int(1, 1);
 
         beginWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleBegin);
         endWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleEnd);
