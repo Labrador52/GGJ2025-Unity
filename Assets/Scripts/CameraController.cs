@@ -89,6 +89,6 @@ public class CameraController : MonoBehaviour
     }
     public void ResetPosition(Vector3 position)
     {
-        gameObject.transform.position = position + new Vector3(0, 2.5f, -10);
+        cameraGameObject.transform.position = position;
     }
 }
