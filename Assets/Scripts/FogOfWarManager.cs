@@ -83,6 +83,14 @@ public class FogOfWarManager : MonoBehaviour
         Debug.Log("Creating Fog of War");
     }
 
+    private IEnumerator CreateFogForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        CreateFog();
+    }
+
+    public void CreateFogWithDelay(float _seconds) => StartCoroutine("CreateFogForSeconds", _seconds); 
+
     [ContextMenu("Clear Fog of War")]
     public void ClearFog()
     {

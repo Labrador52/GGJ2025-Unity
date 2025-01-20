@@ -69,6 +69,7 @@ public class Gameplay : MonoBehaviour
         gameplayCanvas.SetActive(true);
         FogOfWarManager.Instance.CreateFog();
         
+        isPlaying = true;
     }
 
     [ContextMenu("Restart Game")]
@@ -121,7 +122,7 @@ public class Gameplay : MonoBehaviour
 
         _bubbleSpawnWaiting = 80;
 
-        isPlaying = true;
+        
     }
 
     public void LoadNextLevel()
@@ -136,9 +137,10 @@ public class Gameplay : MonoBehaviour
         }
         DeleteLevel();
         LoadLevel(currentLevel);
-        FogOfWarManager.Instance.CreateFog();
+        FogOfWarManager.Instance.CreateFogWithDelay(1f);
         // disable win page
         winPage.SetActive(false);
+        isPlaying = true;
     }
 
     private Vector3 GetLevelStartPosition(int levelNumber)
@@ -207,11 +209,14 @@ public class Gameplay : MonoBehaviour
         allBuildale = PrefabManager.AllBuildable;
 
         // Initialize the managers by fyns
+        BubblePool.instance.ReleaseAllBubble();
+        //BubblePool.instance.pool.Clear();
+
         BuildingManager.instance.Initial(gridGameObject, allBuildale);
 
         MapManager.instance.Initial(gridGameObject, PrefabManager.TileInstantiat, PrefabManager.Tile);
 
-        Inventory.instance.Initial(PrefabManager.AllMaterials);
+        Inventory.instance.Initial(PrefabManager.AllMaterials);  
     }
 
     public void SetInterval(int internvl)

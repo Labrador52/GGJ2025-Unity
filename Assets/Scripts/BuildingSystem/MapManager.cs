@@ -35,7 +35,7 @@ public class MapManager : MonoBehaviour
         fanList = new Dictionary<Vector3Int, Fan>();
         bridgeList = new Dictionary<Vector3Int, Bridge>();
 
-        InitialMap();
+        //InitialMap();
     }
 
     //private void Update()
@@ -86,6 +86,7 @@ public class MapManager : MonoBehaviour
         maxLength = 100;
 
         gameObject.SetActive(true);
+        InitialMap();
     }
 
     public Vector3 GetEndWorldCoordianate() => gridInfo.endWorldCoor;
@@ -94,6 +95,8 @@ public class MapManager : MonoBehaviour
 
     public bool IsGetMail(Vector3 _position)
     {
+        if(gridInfo == null) return false;
+
         Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
 
         if (Vector3Int.Distance(bubbleCoordinate, gridInfo.bubbleMiddle) <= 1)

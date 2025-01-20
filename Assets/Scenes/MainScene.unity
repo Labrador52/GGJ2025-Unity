@@ -3153,6 +3153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bubble: {fileID: 3667585852502080343, guid: f01004258c70e504b8cb6161286445ee, type: 3}
+  bubbleParent: {fileID: 996211825}
+  activeBubbles: []
 --- !u!1 &1164746692
 GameObject:
   m_ObjectHideFlags: 0
