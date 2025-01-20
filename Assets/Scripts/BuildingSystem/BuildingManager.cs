@@ -6,6 +6,7 @@ public class BuildingManager : MonoBehaviour
 {
     public static BuildingManager instance;
     public bool isBuildingMode;
+    public bool isDeleteBuildingMode;
     [SerializeField] private BuildableItem activeBuildable;
     public ConstructionLayer constructionLayer;
     [SerializeField] private PreviewLayer previewLayer;
@@ -43,8 +44,33 @@ public class BuildingManager : MonoBehaviour
 
             BuildingLogic(mousePosition);
         }
+        else if (isDeleteBuildingMode)
+            DeleteBuildingLogic(mousePosition);
+        else previewLayer.ClearPreview();
+
+    }
+
+    private void DeleteBuildingLogic(Vector3 _mousePosition)
+    {
+        bool isValid = !constructionLayer.IsEmpty(_mousePosition);
+
+        if (isValid)
+        {
+            Vector3Int mouseCoordiantes = constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1);
+            Buildable buildable = constructionLayer.GetBuildable(mouseCoordiantes);
+            if (buildable == null) return;
+
+            previewLayer.ShowPreview(buildable.buildableType, _mousePosition, isValid, buildable.direction, false);
+            
+            if(Input.GetMouseButtonDown(0))
+            {
+                constructionLayer.DeleteBuildable(mouseCoordiantes);
+            }
+        }
         else
             previewLayer.ClearPreview();
+
+        
     }
 
     /// <summary>
@@ -83,11 +109,13 @@ public class BuildingManager : MonoBehaviour
 
         if (isValid && Input.GetMouseButtonDown(0))
         {
-            var currentTile = hit.GetComponent<Tilemap>().GetTile(constructionLayer.tilemap.WorldToCell(_mousePosition));
+            Tilemap rowTilemap = hit.GetComponent<Tilemap>();
+            TileBase currentTile = rowTilemap.GetTile(constructionLayer.tilemap.WorldToCell(_mousePosition));
 
-            constructionLayer.Build(_mousePosition, activeBuildable, direction, currentTile);
+            constructionLayer.Build(_mousePosition, activeBuildable, direction, currentTile, rowTilemap);
 
             hit.GetComponent<Tilemap>().SetTile(constructionLayer.tilemap.WorldToCell(_mousePosition), null);
+            
 
         }
     }
@@ -134,7 +162,7 @@ public class BuildingManager : MonoBehaviour
         //if (isValid)
         //    isValid = Inventory.instance.CanRemoveItem(Inventory.instance.allMaterials[activeBuildable.buildingId]);
 
-        previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction);
+        previewLayer.ShowPreview(activeBuildable, _mousePosition, isValid, direction, true);
     }
 
     public void EnterBuildingMode(int _buildId)
@@ -142,5 +170,12 @@ public class BuildingManager : MonoBehaviour
         direction = 0;
         activeBuildable = allBuildable[_buildId];
         isBuildingMode = true;
+        isDeleteBuildingMode = false;
+    }
+
+    public void EnterDeleteBuildingMode()
+    {
+        isDeleteBuildingMode = true;
+        isBuildingMode = false;
     }
 }

@@ -14,4 +14,11 @@ public class Bridge : BuildingBase
 
         MapManager.instance.RegisteredBridge(buildable.coordinates, this);
     }
+
+    public override void DestroySelfOnConstructionLayer()
+    {
+        base.DestroySelfOnConstructionLayer();
+
+        MapManager.instance.LogoutBridge(buildable.coordinates);
+    }
 }

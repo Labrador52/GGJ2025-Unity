@@ -18,6 +18,6 @@ public class BubblePool : MonoBehaviour
         pool = new ObjectPool<GameObject>(() => Instantiate(bubble),
             (GameObject obj) => obj.gameObject.SetActive(true),
             (GameObject obj) => obj.gameObject.SetActive(false),
-           (GameObject obj) => Destroy(obj), true, 100, 10000);
+           (GameObject obj) => Destroy(obj), true, 1000, 10000);
     }
 }

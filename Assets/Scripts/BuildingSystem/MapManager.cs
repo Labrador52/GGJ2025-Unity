@@ -119,7 +119,7 @@ public class MapManager : MonoBehaviour
         {
             for (int j = -maxWidth / 2; j < maxWidth / 2; j++)
             {
-                var tileBase =mountain.GetTile(new Vector3Int(i, j));
+                var tileBase = mountain.GetTile(new Vector3Int(i, j));
                 if (tileBase != null)
                 {
                     mountain.SetTile(new Vector3Int(i, j), defaultTile);
@@ -146,11 +146,16 @@ public class MapManager : MonoBehaviour
 
         fanList.Clear();
         bridgeList.Clear();
+        BuildingManager.instance.constructionLayer.DeleteAllBuildable();
     }
 
     public void RegisteredFan(Vector3Int _effectCoordinate,Fan _fan) => fanList.Add(_effectCoordinate, _fan);
 
     public void RegisteredBridge(Vector3Int _coordinate,Bridge _bridge) => bridgeList.Add(_coordinate, _bridge);
+
+    public void LogoutFan(Vector3Int _effectCoordinate) => fanList.Remove(_effectCoordinate);
+
+    public void LogoutBridge(Vector3Int _coordinate) => bridgeList.Remove(_coordinate);
 
     public bool IsOverlapFan(Vector3Int _effectCoordinate) => fanList.ContainsKey(_effectCoordinate);
 

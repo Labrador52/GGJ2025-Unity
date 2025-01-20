@@ -183,7 +183,7 @@ public class Bubble : MonoBehaviour
         Vector3Int fanEffect = MapManager.instance.CheckFanEffectRange(transform.position);
         // check
 
-        Debug.Log("Fan Effect: " + fanEffect);
+        //Debug.Log("Fan Effect: " + fanEffect);
 
         if (fanEffect != Vector3.zero)
         {

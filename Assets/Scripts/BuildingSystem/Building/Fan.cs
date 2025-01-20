@@ -48,6 +48,11 @@ public class Fan : BuildingBase
 
     public Vector3Int FanLogic() => GetDirectionVector(buildable.direction) * effectLength;
 
-   
+    public override void DestroySelfOnConstructionLayer()
+    {
+        base.DestroySelfOnConstructionLayer();
+
+        MapManager.instance.LogoutFan(effectZone);
+    }
 
 }

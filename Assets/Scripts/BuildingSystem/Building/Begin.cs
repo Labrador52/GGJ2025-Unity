@@ -17,7 +17,7 @@ public class Begin : MonoBehaviour
 
         if (timer >= time)
         {
-            Debug.Log("test");
+            //Debug.Log("test");
             animator.SetTrigger("trigger");
             timer = 0;
         }

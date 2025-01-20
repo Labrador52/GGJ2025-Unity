@@ -8,11 +8,13 @@ public class DebugCanvas : MonoBehaviour
 {
     public Button buttonSpawnBubble;
     public Button buildMode;
+    public Button deleteBuildMode;
 
     private void Awake()
     {
         buttonSpawnBubble.onClick.AddListener(SpawnBubble);
         buildMode.onClick.AddListener(BuildMode);
+        deleteBuildMode.onClick.AddListener(DeleteBuildMode);
     }
 
     private void SpawnBubble()
@@ -24,5 +26,10 @@ public class DebugCanvas : MonoBehaviour
     {
         // start build mode
         BuildingManager.instance.EnterBuildingMode(0);
+    }
+
+    private void DeleteBuildMode()
+    {
+        BuildingManager.instance.EnterDeleteBuildingMode();
     }
 }

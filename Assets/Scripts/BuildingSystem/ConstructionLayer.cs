@@ -8,7 +8,7 @@ public class ConstructionLayer : TileMapLayer
     [SerializeField] private Transform buildParent;
     [SerializeField] private List<BuildableItem> allBuildable;
 
-    public void Build(Vector3 _worldPosition, BuildableItem _item, int _direction, TileBase _currentTile)
+    public void Build(Vector3 _worldPosition, BuildableItem _item, int _direction, TileBase _currentTile,Tilemap _rowTilemap)
     {
         Vector3Int coordinates = tilemap.WorldToCell(_worldPosition) - new Vector3Int(1, 1);
 
@@ -22,6 +22,7 @@ public class ConstructionLayer : TileMapLayer
         itemScript.SetBuildable(buildable);
         itemScript.currentConstructionLayer = this;
         itemScript.tile = _currentTile;
+        itemScript.rowTilemap = _rowTilemap;
 
         buildables.Add(coordinates, buildable);
         BuildingManager.instance.isBuildingMode = false;
@@ -31,12 +32,30 @@ public class ConstructionLayer : TileMapLayer
     }
 
 
-    //public bool IsEmpty(Vector3 _worldPosition, BuildableItem _item)
-    //{
-    //    if (buildables.ContainsKey(tilemap.WorldToCell(_worldPosition) - new Vector3Int(1, 1))) 
-    //        return false;
+    public bool IsEmpty(Vector3 _worldPosition)
+    {
+        if (buildables.ContainsKey(tilemap.WorldToCell(_worldPosition) - new Vector3Int(1, 1))) 
+            return false;
 
-    //    return true;
-    //}
+        return true;
+    }
 
+    public Buildable GetBuildable(Vector3Int _coordinate)
+    {
+        if (buildables.ContainsKey(_coordinate)) 
+            return buildables[_coordinate];
+        return null;
+    }
+    
+    public void DeleteBuildable(Vector3Int _coordinate)
+    {
+        if (buildables.ContainsKey(_coordinate))
+        {
+            buildables[_coordinate].gameObject.GetComponent<BuildingBase>().DestroySelfOnConstructionLayer();
+            Destroy(buildables[_coordinate].gameObject);
+            buildables.Remove(_coordinate);
+        }
+    }
+
+    public void DeleteAllBuildable() => buildables.Clear();
 }

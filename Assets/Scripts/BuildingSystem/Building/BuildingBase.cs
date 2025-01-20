@@ -11,6 +11,7 @@ public class BuildingBase : MonoBehaviour
     protected SpriteRenderer sr;
     public TileBase tile;
     protected Tilemap recoveryTilemap;
+    public Tilemap rowTilemap;
 
 
     protected virtual void Start()
@@ -32,4 +33,10 @@ public class BuildingBase : MonoBehaviour
     }
 
     public void DestroySelf() => Destroy(gameObject);
+
+    public virtual void DestroySelfOnConstructionLayer()
+    {
+        recoveryTilemap.SetTile(buildable.coordinates,null);
+        rowTilemap.SetTile(buildable.coordinates, tile);
+    }
 }

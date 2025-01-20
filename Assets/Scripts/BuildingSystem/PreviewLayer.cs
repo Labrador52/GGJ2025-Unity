@@ -8,7 +8,7 @@ public class PreviewLayer : TileMapLayer
     [SerializeField] private SpriteRenderer previewRenderer;
     [SerializeField] private TilemapRenderer tilemapRenderer;
 
-    public void ShowPreview(BuildableItem _item, Vector3 _worldCoordinates, bool _isValid, int _direction)
+    public void ShowPreview(BuildableItem _item, Vector3 _worldCoordinates, bool _isValid, int _direction,bool _isBuilding)
     {
         Vector3Int coordinates = tilemap.WorldToCell(_worldCoordinates);
         previewRenderer.enabled = true;
@@ -17,10 +17,13 @@ public class PreviewLayer : TileMapLayer
         previewRenderer.transform.position += new Vector3(0, 0.25f);
 
         previewRenderer.transform.position = new Vector3(previewRenderer.transform.position.x, previewRenderer.transform.position.y,
-            -(tilemap.CellToWorld(coordinates).x + tilemap.CellToWorld(coordinates).y));
+            -(tilemap.CellToWorld(coordinates).x + tilemap.CellToWorld(coordinates).y - 0.001f));
 
         previewRenderer.sprite = _item.previewSprites[_direction];
-        previewRenderer.color = _isValid ? new Color(0, 1, 0, 0.5f) : new Color(1, 0, 0, 0.5f);
+        if (_isBuilding)
+            previewRenderer.color = _isValid ? new Color(0, 1, 0, 0.5f) : new Color(1, 0, 0, 0.5f);
+        else
+            previewRenderer.color = _isValid ? new Color(1, 0, 0, 0.5f) : new Color(0, 0, 0, 0);
         tilemapRenderer.enabled = true;
     }
 
