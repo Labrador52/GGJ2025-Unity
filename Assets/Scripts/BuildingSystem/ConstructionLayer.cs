@@ -31,12 +31,12 @@ public class ConstructionLayer : TileMapLayer
     }
 
 
-    public bool IsEmpty(Vector3 _worldPosition, BuildableItem _item)
-    {
-        if (buildables.ContainsKey(tilemap.WorldToCell(_worldPosition)))
-            return false;
+    //public bool IsEmpty(Vector3 _worldPosition, BuildableItem _item)
+    //{
+    //    if (buildables.ContainsKey(tilemap.WorldToCell(_worldPosition) - new Vector3Int(1, 1))) 
+    //        return false;
 
-        return true;
-    }
+    //    return true;
+    //}
 
 }

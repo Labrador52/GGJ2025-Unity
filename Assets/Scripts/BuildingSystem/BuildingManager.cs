@@ -101,16 +101,34 @@ public class BuildingManager : MonoBehaviour
         if (hit != null && hit.GetComponent<Tilemap>() != null)
         {
             if (hit.gameObject.tag == "Water" || hit.gameObject.tag == "Mountain")
+            {
                 isValid = false;
-            else
-                isValid = constructionLayer.IsEmpty(_mousePosition, activeBuildable);
+                //Debug.Log("ÍßÆ¬¼ì²â");
+            }
+            //else
+            //{
+            //    isValid = constructionLayer.IsEmpty(_mousePosition, activeBuildable);
+            //    Debug.Log("½¨ÖþÎï¼ì²â");
+            //}
         }
-        else isValid = false;
+        else
+        {
+            isValid = false;
+            //Debug.Log("Î´¼ì²âµ½µØÃæ");
+        }
 
         if (isValid && activeBuildable.buildingId == 0)
         {
-            Vector3Int effectCoordinate = Fan.GetDirectionVector(direction) + constructionLayer.tilemap.WorldToCell(_mousePosition) - new Vector3Int(1, 1);
+            Vector3Int effectCoordinate = Fan.GetDirectionVector(direction) + constructionLayer.tilemap.WorldToCell(_mousePosition);
             isValid = !MapManager.instance.IsOverlapFan(effectCoordinate);
+        }
+
+        if (isValid)
+        {
+            if (constructionLayer.tilemap.WorldToCell(_mousePosition) == MapManager.instance.gridInfo.bubbleEnd ||
+                constructionLayer.tilemap.WorldToCell(_mousePosition) == MapManager.instance.gridInfo.bubbleMiddle ||
+                constructionLayer.tilemap.WorldToCell(_mousePosition) == MapManager.instance.gridInfo.bubbleBegin)
+                isValid = false;
         }
 
         //if (isValid)
@@ -121,6 +139,7 @@ public class BuildingManager : MonoBehaviour
 
     public void EnterBuildingMode(int _buildId)
     {
+        direction = 0;
         activeBuildable = allBuildable[_buildId];
         isBuildingMode = true;
     }

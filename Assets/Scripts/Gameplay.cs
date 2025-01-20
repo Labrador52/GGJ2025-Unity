@@ -164,7 +164,7 @@ public class Gameplay : MonoBehaviour
     public void DeleteLevel()
     {
         // DeleteFan();
-        MapManager.instance.DeleteAllFan();
+        MapManager.instance.DeleteAllBuild();
         Destroy(bubbles);
         bubbles = new GameObject("Bubbles");
 

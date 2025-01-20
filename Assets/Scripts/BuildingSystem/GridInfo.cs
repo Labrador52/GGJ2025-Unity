@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridInfo : MonoBehaviour
 {
-    [SerializeField] private Vector3Int bubbleBegin;
+    [SerializeField] public Vector3Int bubbleBegin;
     [SerializeField] public Vector3Int bubbleEnd;
     [SerializeField] public Vector3Int bubbleMiddle;
 
@@ -26,5 +26,9 @@ public class GridInfo : MonoBehaviour
         beginWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleBegin);
         endWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleEnd);
         middleWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleMiddle);
+
+        begin.position -= new Vector3(0, 0, beginWorldCoor.x + beginWorldCoor.y);
+        end.position -= new Vector3(0, 0, endWorldCoor.x + endWorldCoor.y);
+        middle.position -= new Vector3(0, 0, middleWorldCoor.x + middleWorldCoor.y);
     }
 }

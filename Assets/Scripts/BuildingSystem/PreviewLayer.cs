@@ -14,8 +14,7 @@ public class PreviewLayer : TileMapLayer
         previewRenderer.enabled = true;
         previewRenderer.transform.position = tilemap.CellToWorld(coordinates) + BuildingManager.instance.offset;
 
-        if (_item.buildingId == 0)
-            previewRenderer.transform.position += new Vector3(0, 0.25f);
+        previewRenderer.transform.position += new Vector3(0, 0.25f);
 
         previewRenderer.transform.position = new Vector3(previewRenderer.transform.position.x, previewRenderer.transform.position.y,
             -(tilemap.CellToWorld(coordinates).x + tilemap.CellToWorld(coordinates).y));

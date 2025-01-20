@@ -67,6 +67,40 @@ public class Bubble : MonoBehaviour
         energy = 8;
     }
 
+    #region 修改1
+    private void OnEnable()
+    {
+        if (bubbleSpriteGameObject == null)
+        {
+            Debug.LogError("Bubble Sprite GameObject is not assigned in the inspector");
+        }
+        if (bubbleShadowGameObject == null)
+        {
+            Debug.LogError("Bubble Shadow GameObject is not assigned in the inspector");
+        }
+
+        TriggerBody.radius = triggerRadiusBody;
+        TriggerPickup.radius = triggerRadiusPickup;
+        TriggerFog.radius = triggerRadiusFog;
+
+        _position = new Vector2(0.0f, 0.0f);
+        solidHeight = 1.0f; // The height of the Buggle, TEMPORARY
+
+        AnimationDeltaTime = UnityEngine.Random.Range(0.0f, Mathf.PI * 2);
+
+        velocity = 0.05f;
+        lifeLeft = 120000;
+        energy = 8;
+
+        
+        isFacingRight = true;
+        isFacingFront = false;
+        isFill = false;
+        _destination = Vector2.zero;
+
+    }
+    #endregion
+
     private void Update()
     {
 #region Floating Animation
@@ -222,7 +256,8 @@ public class Bubble : MonoBehaviour
 
     internal void Die()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        BubblePool.instance.pool.Release(gameObject);
     }
 
     public static void Spawn()
@@ -243,7 +278,9 @@ public class Bubble : MonoBehaviour
     {
         position += new Vector2(0.0f, 0.25f);
         // 实例化Bubble预制体
-        GameObject bubble = Instantiate(PrefabManager.Instance.BubblePrefab, position, Quaternion.identity) as GameObject;
+        //GameObject bubble = Instantiate(PrefabManager.Instance.BubblePrefab, position, Quaternion.identity) as GameObject;
+        GameObject bubble = BubblePool.instance.pool.Get();
+        bubble.transform.position = position;
         // set name as Bubble
         bubble.name = "Bubble";
         // set parent as Bubbles

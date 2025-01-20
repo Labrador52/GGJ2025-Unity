@@ -30,4 +30,6 @@ public class BuildingBase : MonoBehaviour
     {
         recoveryTilemap.SetTile(buildable.coordinates, tile);
     }
+
+    public void DestroySelf() => Destroy(gameObject);
 }

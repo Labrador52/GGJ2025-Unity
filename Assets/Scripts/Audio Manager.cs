@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource[] bgm;
 
     public bool playBgm = true;
-    private int bgmIndex;
+    private int bgmIndex = 0;
 
     private bool canPlaySFX;
 
@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
             instance = this;
 
         Invoke("AllowSFX", 1f);
+        playBgm = true;
     }
 
     private void Update()
@@ -31,7 +32,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             if (!bgm[bgmIndex].isPlaying)
-                PlayBGM(bgmIndex);
+                PlayBGM();
         }
     }
 
@@ -64,12 +65,6 @@ public class AudioManager : MonoBehaviour
         {
             bgm[i].Stop();
         }
-    }
-
-    public void PlayRandomBGM()
-    {
-        bgmIndex = Random.Range(0, bgm.Length);
-        PlayBGM(bgmIndex);
     }
 
     private void AllowSFX() => canPlaySFX = true;

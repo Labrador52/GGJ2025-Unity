@@ -7,9 +7,10 @@ public class MapManager : MonoBehaviour
     public static MapManager instance;
 
     private Dictionary<Vector3Int, Fan> fanList;
+    private Dictionary<Vector3Int, Bridge> bridgeList;
     [SerializeField] private GameObject tileInstantiate;
     [SerializeField] private Tile defaultTile;
-    private GridInfo gridInfo;
+    public GridInfo gridInfo;
 
     public Tilemap ground;
     public Tilemap mountain;
@@ -32,6 +33,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         fanList = new Dictionary<Vector3Int, Fan>();
+        bridgeList = new Dictionary<Vector3Int, Bridge>();
 
         InitialMap();
     }
@@ -80,8 +82,8 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        maxWidth = 48;
-        maxLength = 48;
+        maxWidth = 100;
+        maxLength = 100;
 
         gameObject.SetActive(true);
     }
@@ -134,22 +136,29 @@ public class MapManager : MonoBehaviour
 
     public void CloseTip() => gridInfo.tip.SetActive(false);
 
-    public void DeleteAllFan()
+    public void DeleteAllBuild()
     {
         foreach(var coor in fanList.Keys)
-        {
             fanList[coor].DestroySelf();
-            // fanList.Remove(coor);
-        }
+
+        foreach(var coor in bridgeList.Keys)
+            bridgeList[coor].DestroySelf();
+
         fanList.Clear();
+        bridgeList.Clear();
     }
 
     public void RegisteredFan(Vector3Int _effectCoordinate,Fan _fan) => fanList.Add(_effectCoordinate, _fan);
+
+    public void RegisteredBridge(Vector3Int _coordinate,Bridge _bridge) => bridgeList.Add(_coordinate, _bridge);
 
     public bool IsOverlapFan(Vector3Int _effectCoordinate) => fanList.ContainsKey(_effectCoordinate);
 
     public Vector3Int CheckFanEffectRange(Vector3 _position)
     {
+        if (gridInfo == null)
+            return new Vector3Int(0, 0);
+
         Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
 
         //Debug.Log("bubbleCoordinate:" + bubbleCoordinate);

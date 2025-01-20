@@ -16,5 +16,8 @@ MonoBehaviour:
   buildingName: "\u6865"
   previewSprites:
   - {fileID: 21300000, guid: 778bf6616d1777043a9c8d3635ca36ae, type: 3}
+  - {fileID: 21300000, guid: 778bf6616d1777043a9c8d3635ca36ae, type: 3}
+  - {fileID: 21300000, guid: 778bf6616d1777043a9c8d3635ca36ae, type: 3}
+  - {fileID: 21300000, guid: 778bf6616d1777043a9c8d3635ca36ae, type: 3}
   buildingPrefab: {fileID: 4989086569370751641, guid: 4067064921e6e7d4d88647bbb625f800, type: 3}
   buildingDescription: 
