@@ -9,7 +9,8 @@ public class BubbleFogTrigger : MonoBehaviour
         // Debug.Log("Triggered");
         if (collision.gameObject.tag == "Fog")
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            FogPool.instance.pool.Release(collision.gameObject);
         }
     }
 }

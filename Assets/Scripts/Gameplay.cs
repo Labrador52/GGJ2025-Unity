@@ -22,6 +22,7 @@ public class Gameplay : MonoBehaviour
 #endregion
 
     [SerializeField] public bool isPlaying;
+    [SerializeField] public bool isWin;
     [SerializeField] private int _bubbleSpawnInterval;
     [SerializeField] private int _bubbleSpawnWaiting;
 
@@ -60,18 +61,34 @@ public class Gameplay : MonoBehaviour
     [ContextMenu("Start Game")]
     public void StartGame()
     {
+        LoadAnimation.instance.PlayLoadAnimation();
         Debug.Log("Game Started");
         LoadLevel(0);
         // FogOfWarManager.Instance.CreateFog();
-        StartMenu.Instance.gameObject.SetActive(false);
-
+        //StartMenu.Instance.gameObject.SetActive(false);
+        StartCoroutine(CloseStartMenuWithDelay());
+        
         // Enable Gameplay UI
         gameplayCanvas.SetActive(true);
-        FogOfWarManager.Instance.CreateFog();
+        FogOfWarManager.Instance.CreateFogWithDelay(1f);
         
         isPlaying = true;
     }
 
+    private IEnumerator CloseStartMenuWithDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        StartMenu.Instance.gameObject.SetActive(false);
+    }
+
+    private IEnumerator CloseWinPageWithDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        winPage.SetActive(false);
+        DeleteLevel();
+        LoadLevel(currentLevel);
+    }
+    
     [ContextMenu("Restart Game")]
     public void RestartGame()
     {
@@ -96,9 +113,11 @@ public class Gameplay : MonoBehaviour
     [ContextMenu("Win")]
     public void Win()
     {
+        if (isWin) return;
+
         Debug.Log("Game Win");
         isPlaying = false;
-
+        isWin = true;
         // Show Win UI
         winPage.SetActive(true); 
 
@@ -127,6 +146,8 @@ public class Gameplay : MonoBehaviour
 
     public void LoadNextLevel()
     {
+        LoadAnimation.instance.PlayLoadAnimation();
+        
         currentLevel += 1;
         if (currentLevel >= 3)
         {
@@ -135,12 +156,13 @@ public class Gameplay : MonoBehaviour
             // show introduce page
 
         }
-        DeleteLevel();
-        LoadLevel(currentLevel);
+        StartCoroutine(CloseWinPageWithDelay());
+
         FogOfWarManager.Instance.CreateFogWithDelay(1f);
         // disable win page
-        winPage.SetActive(false);
+        //winPage.SetActive(false);
         isPlaying = true;
+        Debug.Log("为什么这么多bug");
     }
 
     private Vector3 GetLevelStartPosition(int levelNumber)
@@ -198,6 +220,7 @@ public class Gameplay : MonoBehaviour
 
     private void InitializeLevel(int level)
     {
+        isWin = false;
 
         GameObject levelGameObject = Instantiate(PrefabManager.Instance.LevelPrefabs[level], gameObject.transform);
         // set name as Level

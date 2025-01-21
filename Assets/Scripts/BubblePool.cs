@@ -59,6 +59,6 @@ public class BubblePool : MonoBehaviour
 
         }
         activeBubbles.Clear();
-        //Debug.Log("É¾³ýÍê³É");
+        //Debug.Log("??????");
     }
 }

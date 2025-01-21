@@ -68,7 +68,8 @@ public class FogOfWarManager : MonoBehaviour
         {
             for (float j = 0; j < _fogOfWarSizeVertical; j += (1.0f / _fogOfWarResolution))
             {
-                GameObject go = Instantiate(_fogOfWarPlanePrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+                //GameObject go = Instantiate(_fogOfWarPlanePrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+                GameObject go = FogPool.instance.pool.Get();
                 go.transform.SetParent(_fogOfWarPlane.transform);
                 go.transform.localPosition = new Vector3(i, j, -5.0f);
                 // according the Size Of Fog of War Plane, move fog position
@@ -95,10 +96,11 @@ public class FogOfWarManager : MonoBehaviour
     public void ClearFog()
     {
         Debug.Log("Clearing Fog of War");
-        while (_fogOfWarPlane.transform.childCount > 0)
-        {
-            DestroyImmediate(_fogOfWarPlane.transform.GetChild(0).gameObject);
-        }
-    }
+        //while (_fogOfWarPlane.transform.childCount > 0)
+        //{
+        //    DestroyImmediate(_fogOfWarPlane.transform.GetChild(0).gameObject);
+        //}
 
+        FogPool.instance.ReleaseAllFog();
+    }
 }
