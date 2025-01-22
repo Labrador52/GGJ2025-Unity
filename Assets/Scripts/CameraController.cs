@@ -46,22 +46,24 @@ public class CameraController : MonoBehaviour
 
         // Move the camera
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && mainCamera.transform.position.y < 10)
         {
             mainCamera.transform.position += mainCamera.transform.up * cameraMoveSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && mainCamera.transform.position.y > -10)
         {
             mainCamera.transform.position -= mainCamera.transform.up * cameraMoveSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && mainCamera.transform.position.x > -25)
         {
             mainCamera.transform.position -= mainCamera.transform.right * cameraMoveSpeed * Time.deltaTime;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && mainCamera.transform.position.x < 20)
         {
             mainCamera.transform.position += mainCamera.transform.right * cameraMoveSpeed * Time.deltaTime;
         }
+
+        
 
         // set Camera Size
 

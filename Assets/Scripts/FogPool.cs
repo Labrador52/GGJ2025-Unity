@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -55,7 +54,7 @@ public class FogPool : MonoBehaviour
             pool.Release(activeFog[i]);
 
         }
-        activeFog.Clear();
+        //activeFog.Clear();
 
     }
 }

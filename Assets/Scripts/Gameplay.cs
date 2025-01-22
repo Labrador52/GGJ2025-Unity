@@ -19,8 +19,9 @@ public class Gameplay : MonoBehaviour
             return _instance;
         }
     }
-#endregion
-
+    #endregion
+    public bool FogMode;
+    public float timeScale;
     [SerializeField] public bool isPlaying;
     [SerializeField] public bool isWin;
     [SerializeField] private int _bubbleSpawnInterval;
@@ -55,6 +56,8 @@ public class Gameplay : MonoBehaviour
                 _bubbleSpawnWaiting = 0;
             }
         }
+
+        Time.timeScale = timeScale;
     }
 
     #region Gameplay Controls
@@ -70,7 +73,9 @@ public class Gameplay : MonoBehaviour
         
         // Enable Gameplay UI
         gameplayCanvas.SetActive(true);
-        FogOfWarManager.Instance.CreateFogWithDelay(1f);
+
+        if (!FogMode)
+            FogOfWarManager.Instance.CreateFogWithDelay(1f);
         
         isPlaying = true;
     }
@@ -155,7 +160,7 @@ public class Gameplay : MonoBehaviour
         LoadAnimation.instance.PlayLoadAnimation();
         
         currentLevel += 1;
-        if (currentLevel >= 3)
+        if (currentLevel >= 4)
         {
             Debug.LogError("No more levels");
             return;
@@ -164,11 +169,12 @@ public class Gameplay : MonoBehaviour
         }
         StartCoroutine(CloseWinPageWithDelay());
 
-        FogOfWarManager.Instance.CreateFogWithDelay(1f);
+        if (!FogMode)
+            FogOfWarManager.Instance.CreateFogWithDelay(1f);
+
         // disable win page
         //winPage.SetActive(false);
         isPlaying = true;
-        //Debug.Log("为什么这么多bug");
     }
 
     private Vector3 GetLevelStartPosition()
@@ -242,6 +248,7 @@ public class Gameplay : MonoBehaviour
 
         // Initialize the managers by fyns
         BubblePool.instance.ReleaseAllBubble();
+        CloudPool.instance.ReleaseAllCloud();
         //BubblePool.instance.pool.Clear();
 
         BuildingManager.instance.Initial(gridGameObject, allBuildale);

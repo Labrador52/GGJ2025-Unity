@@ -107,8 +107,12 @@ public class Bubble : MonoBehaviour
         bubbleFloat = Mathf.Sin(Time.time * 2 + AnimationDeltaTime) * 0.1f;
         bubbleFloat += solidHeight;
         bubbleSpriteGameObject.transform.localPosition = new Vector2(0.0f, bubbleFloat);
-#endregion
+        #endregion
 
+        if (!Gameplay.Instance.FogMode)
+            return;
+
+        MapManager.instance.ClearSurroundingFog(transform.position, isFacingRight, isFacingFront);
     }
 
     private void FixedUpdate()
@@ -138,24 +142,24 @@ public class Bubble : MonoBehaviour
         // }
 #endregion
 
-    // life
-    lifeLeft -= 1;
-    if (lifeLeft <= 0)
-    {
-        Die();
-        return;
-    }
+        // life
+        lifeLeft -= 1;
+        if (lifeLeft <= 0)
+        {
+            Die();
+            return;
+        }
 
-    // move
-    transform.position = Vector2.MoveTowards(transform.position, _destination, velocity);
+        // move
+        transform.position = Vector2.MoveTowards(transform.position, _destination, velocity);
 
-    float distance = Vector2.SqrMagnitude((Vector2)transform.position - _destination);
+        float distance = Vector2.SqrMagnitude((Vector2)transform.position - _destination);
 
-    if (distance <= 0.0001f)
-    {
-        transform.position = _destination;
-        ArriveDestination();
-    }
+        if (distance <= 0.0001f)
+        {
+            transform.position = _destination;
+            ArriveDestination();
+        }
 
     }
 

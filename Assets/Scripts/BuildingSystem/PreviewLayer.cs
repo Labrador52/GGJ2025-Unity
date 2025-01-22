@@ -17,9 +17,10 @@ public class PreviewLayer : TileMapLayer
         previewRenderer.transform.position += new Vector3(0, 0.25f);
 
         previewRenderer.transform.position = new Vector3(previewRenderer.transform.position.x, previewRenderer.transform.position.y,
-            -(tilemap.CellToWorld(coordinates).x + tilemap.CellToWorld(coordinates).y - 0.001f));
+            -(tilemap.CellToWorld(coordinates).x + tilemap.CellToWorld(coordinates).y));
 
         previewRenderer.transform.position = BuildingManager.PositionZScale(previewRenderer.transform.position);
+        previewRenderer.transform.position += new Vector3(0, 0, 0.01f); 
 
         previewRenderer.sprite = _item.previewSprites[_direction];
         if (_isBuilding)

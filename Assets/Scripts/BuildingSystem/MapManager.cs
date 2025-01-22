@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,10 +13,13 @@ public class MapManager : MonoBehaviour
     [SerializeField] private Tile defaultTile;
     public GridInfo gridInfo;
 
+    private bool[,] ClearFogArr;
+
     public Tilemap ground;
     public Tilemap mountain;
     public Tilemap water;
     public Tilemap contaminate;
+    public Tilemap fog;
     [Space]
     public int maxWidth;
     public int maxLength;
@@ -34,6 +38,19 @@ public class MapManager : MonoBehaviour
     {
         fanList = new Dictionary<Vector3Int, Fan>();
         bridgeList = new Dictionary<Vector3Int, Bridge>();
+
+        ClearFogArr = new bool[9, 9]
+        {
+            { false,true,true,true,false,false,false,false,false },
+            { true,true,true,true,true,true,false,false,false },
+            { true,true,true,true,true,true,true,false, false },
+            { true,true,true,true,true,true,true,true,false },
+            { true,true,true,true,true,true,true,true,true },
+            { false,true,true,true,true,true,true,true,true },
+            { false,false,true,true,true,true,true,true,true },
+            { false,false,false,true,true,true,true,true,true },
+            { false,false,false,false,true,true,true,true,false },
+        };
 
         //InitialMap();
     }
@@ -77,6 +94,9 @@ public class MapManager : MonoBehaviour
                 case "Contaminate":
                     contaminate = _Grid.transform.GetChild(i).GetComponent<Tilemap>();
                     break;
+                case "Fog":
+                    fog = _Grid.transform.GetChild(i).GetComponent<Tilemap>();
+                    break;
                 default: 
                     break;
             }
@@ -107,6 +127,40 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
+    public void ClearSurroundingFog(Vector3 _position,bool _isRight,bool _isFront)
+    {
+        Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
+
+        for(int i = 4; i > -5; i--)
+        {
+            for(int j = -4; j < 5; j++)
+            {
+                if (!ClearFogArr[i + 4, j + 4]) continue;
+
+                if (fog.GetTile(bubbleCoordinate + new Vector3Int(i, j)) != null)
+                {
+                    int index;
+                    if (_isRight && _isFront) index = 2;
+                    else if(!_isFront && !_isRight) index = 1;
+                    else
+                    {
+                        if (j == 0) index = Mathf.FloorToInt(Random.value) + 1;
+                        else index = j < 0 ? 2 : 1;
+                    }
+
+
+                    fog.SetTile(bubbleCoordinate + new Vector3Int(i, j), null);
+
+                    GameObject cloud = CloudPool.instance.pool.Get();
+                    //cloud.transform.parent = fog.transform;
+                    cloud.transform.position = mountain.CellToWorld(bubbleCoordinate + new Vector3Int(i, j)) + new Vector3(0, 0.25f);
+
+                    cloud.GetComponent<Cloud>().DestroySelfAnimation(index);
+                }
+            }
+        }
+    }
+
     public bool IsArrive(Vector3 _position)
     {
         Vector3Int bubbleCoordinate = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(_position);
@@ -129,7 +183,7 @@ public class MapManager : MonoBehaviour
                     Tile tile = tileBase as Tile;
                     GameObject tileItem = Instantiate(tileInstantiate, mountain.CellToWorld(new Vector3Int(i, j)), Quaternion.identity);
                     tileItem.GetComponent<SpriteRenderer>().sprite = tile.sprite;
-                    tileItem.GetComponent<SpriteRenderer>().sortingOrder = 2;
+                    tileItem.GetComponent<SpriteRenderer>().sortingOrder = 3;
                     tileItem.transform.SetParent(mountain.gameObject.transform.parent);
                     tileItem.transform.position = new Vector3(tileItem.transform.position.x, tileItem.transform.position.y + 0.25f, -(tileItem.transform.position.x + tileItem.transform.position.y));
                     //tileItem.transform.position -= new Vector3(0, -0.25f, tileItem.transform.position.x + tileItem.transform.position.y);

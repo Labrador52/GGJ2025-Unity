@@ -32,7 +32,7 @@ public class LoadAnimation : MonoBehaviour
 
     private IEnumerator DoneLoad()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.3f);
         anim.SetTrigger("Out");
         anim.SetBool("IsWhite", false);
         yield return new WaitForSeconds(0.7f);

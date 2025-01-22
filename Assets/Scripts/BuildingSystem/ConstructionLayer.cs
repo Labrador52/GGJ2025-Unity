@@ -19,7 +19,7 @@ public class ConstructionLayer : TileMapLayer
         itemObject.transform.position = new Vector3(itemObject.transform.position.x, itemObject.transform.position.y, -zOffset);
 
         itemObject.transform.position = BuildingManager.PositionZScale(itemObject.transform.position);
-        Debug.Log(itemObject.transform.position);
+        //Debug.Log(itemObject.transform.position);
 
         Buildable buildable = new Buildable(_item, coordinates + new Vector3Int(1, 1), BuildingManager.instance.direction, itemObject);
         BuildingBase itemScript = itemObject.GetComponent<BuildingBase>();

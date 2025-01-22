@@ -58,7 +58,6 @@ public class BubblePool : MonoBehaviour
             pool.Release(activeBubbles[i]);
 
         }
-        activeBubbles.Clear();
-        //Debug.Log("??????");
+        //activeBubbles.Clear();
     }
 }
