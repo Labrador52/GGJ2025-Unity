@@ -13,22 +13,26 @@ public class GridInfo : MonoBehaviour
     public Transform middle;
 
     public GameObject tip;
-    [HideInInspector] public Vector3 beginWorldCoor;
-    [HideInInspector] public Vector3 endWorldCoor;
-    [HideInInspector] public Vector3 middleWorldCoor;
+    public Vector3 beginWorldCoor;
+    public Vector3 endWorldCoor;
+    public Vector3 middleWorldCoor;
 
     private void Start()
     {
-        bubbleBegin = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(begin.position) - new Vector3Int(1, 1);
-        bubbleMiddle = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(middle.position);
-        bubbleEnd = BuildingManager.instance.constructionLayer.tilemap.WorldToCell(end.position) - new Vector3Int(1, 1);
+        bubbleBegin = MapManager.instance.mountain.WorldToCell(begin.position) - new Vector3Int(1, 1);
+        bubbleMiddle = MapManager.instance.mountain.WorldToCell(middle.position);
+        bubbleEnd = MapManager.instance.mountain.WorldToCell(end.position) - new Vector3Int(1, 1);
 
-        beginWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleBegin);
-        endWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleEnd);
-        middleWorldCoor = BuildingManager.instance.constructionLayer.tilemap.CellToWorld(bubbleMiddle);
+        beginWorldCoor = MapManager.instance.mountain.CellToWorld(bubbleBegin);
+        endWorldCoor = MapManager.instance.mountain.CellToWorld(bubbleEnd);
+        middleWorldCoor = MapManager.instance.mountain.CellToWorld(bubbleMiddle);
 
-        begin.position -= new Vector3(0, 0, beginWorldCoor.x + beginWorldCoor.y);
-        end.position -= new Vector3(0, 0, endWorldCoor.x + endWorldCoor.y);
-        middle.position -= new Vector3(0, 0, middleWorldCoor.x + middleWorldCoor.y);
+        begin.position = new Vector3(begin.position.x, begin.position.y, -(beginWorldCoor.x + beginWorldCoor.y));
+        end.position = new Vector3(end.position.x, end.position.y, -(endWorldCoor.x + endWorldCoor.y));
+        middle.position = new Vector3(middle.position.x, middle.position.y, -(middleWorldCoor.x + middleWorldCoor.y));
+
+        begin.position = BuildingManager.PositionZScale(begin.position);
+        end.position = BuildingManager.PositionZScale(end.position);
+        middle.position = BuildingManager.PositionZScale(middle.position);
     }
 }

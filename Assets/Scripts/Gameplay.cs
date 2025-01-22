@@ -51,13 +51,13 @@ public class Gameplay : MonoBehaviour
             _bubbleSpawnWaiting += 1;
             if (_bubbleSpawnWaiting == _bubbleSpawnInterval)
             {
-                Bubble.Spawn(MapManager.instance.GetBeginWorldCoordinate());
+                //Bubble.Spawn(MapManager.instance.GetBeginWorldCoordinate());
                 _bubbleSpawnWaiting = 0;
             }
         }
     }
 
-#region Gameplay Controls
+    #region Gameplay Controls
     [ContextMenu("Start Game")]
     public void StartGame()
     {
@@ -136,12 +136,18 @@ public class Gameplay : MonoBehaviour
         Debug.Log("Level Loaded");
         InitializeLevel(levelNumber);
         // reset camera position
-        CameraController.Instance.ResetPosition(GetLevelStartPosition(levelNumber));
-
+        //CameraController.Instance.ResetPosition(GetLevelStartPosition(levelNumber));
+        StartCoroutine(ResetCameraWithDelay(0.2f));
 
         _bubbleSpawnWaiting = 80;
 
         
+    }
+
+    private IEnumerator ResetCameraWithDelay(float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        CameraController.Instance.ResetPosition(GetLevelStartPosition());
     }
 
     public void LoadNextLevel()
@@ -162,25 +168,28 @@ public class Gameplay : MonoBehaviour
         // disable win page
         //winPage.SetActive(false);
         isPlaying = true;
-        Debug.Log("为什么这么多bug");
+        //Debug.Log("为什么这么多bug");
     }
 
-    private Vector3 GetLevelStartPosition(int levelNumber)
+    private Vector3 GetLevelStartPosition()
     {
-        switch (levelNumber)
-        {
-            case 0:
-                return new Vector3(-12.5f, -4.5f, -10.0f);
-            case 1:
-                return new Vector3(-12.5f, -4.5f, -10.0f);
-            case 2:
-                return new Vector3(-12.5f, -4.5f, -10.0f);
-            case 3:
-                return new Vector3(-12.5f, -4.5f, -10.0f);
-            case 4:
-                return new Vector3(-12.5f, -4.5f, -10.0f);
-        }
-        return new Vector3(0.0f, 0.0f, -10.0f);
+        Vector3 ret = MapManager.instance.GetBeginWorldCoordinate();
+        return new Vector3(ret.x, ret.y, -10);
+
+        //switch (levelNumber)
+        //{
+        //    case 0:
+        //        return new Vector3(-12.5f, -4.5f, -50.0f);
+        //    case 1:
+        //        return new Vector3(-12.5f, -4.5f, -50.0f);
+        //    case 2:
+        //        return new Vector3(-12.5f, -4.5f, -50.0f);
+        //    case 3:
+        //        return new Vector3(-12.5f, -4.5f, -50.0f);
+        //    case 4:
+        //        return new Vector3(-12.5f, -4.5f, -50.0f);
+        //}
+        //return new Vector3(0.0f, 0.0f, -50.0f);
     }
     
 

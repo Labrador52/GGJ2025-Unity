@@ -131,7 +131,9 @@ public class MapManager : MonoBehaviour
                     tileItem.GetComponent<SpriteRenderer>().sprite = tile.sprite;
                     tileItem.GetComponent<SpriteRenderer>().sortingOrder = 2;
                     tileItem.transform.SetParent(mountain.gameObject.transform.parent);
-                    tileItem.transform.position -= new Vector3(0, -0.25f, tileItem.transform.position.x + tileItem.transform.position.y);
+                    tileItem.transform.position = new Vector3(tileItem.transform.position.x, tileItem.transform.position.y + 0.25f, -(tileItem.transform.position.x + tileItem.transform.position.y));
+                    //tileItem.transform.position -= new Vector3(0, -0.25f, tileItem.transform.position.x + tileItem.transform.position.y);
+                    tileItem.transform.position = BuildingManager.PositionZScale(tileItem.transform.position);
                 }
             }
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Begin : MonoBehaviour
 {
-    private float timer = 0.6f;
+    private float timer = 0.65f;
     private float time = 2;
     private Animator animator;
 
@@ -13,6 +13,9 @@ public class Begin : MonoBehaviour
 
     private void Update()
     {
+        if (!Gameplay.Instance.isPlaying)
+            return;
+
         timer += Time.deltaTime;
 
         if (timer >= time)
@@ -23,4 +26,5 @@ public class Begin : MonoBehaviour
         }
     }
 
+    
 }

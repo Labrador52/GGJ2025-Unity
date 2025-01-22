@@ -19,6 +19,8 @@ public class PreviewLayer : TileMapLayer
         previewRenderer.transform.position = new Vector3(previewRenderer.transform.position.x, previewRenderer.transform.position.y,
             -(tilemap.CellToWorld(coordinates).x + tilemap.CellToWorld(coordinates).y - 0.001f));
 
+        previewRenderer.transform.position = BuildingManager.PositionZScale(previewRenderer.transform.position);
+
         previewRenderer.sprite = _item.previewSprites[_direction];
         if (_isBuilding)
             previewRenderer.color = _isValid ? new Color(0, 1, 0, 0.5f) : new Color(1, 0, 0, 0.5f);

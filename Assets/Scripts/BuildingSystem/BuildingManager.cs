@@ -115,6 +115,7 @@ public class BuildingManager : MonoBehaviour
             constructionLayer.Build(_mousePosition, activeBuildable, direction, currentTile, rowTilemap);
 
             hit.GetComponent<Tilemap>().SetTile(constructionLayer.tilemap.WorldToCell(_mousePosition), null);
+            //Debug.Log(constructionLayer.tilemap.WorldToCell(_mousePosition));
             
 
         }
@@ -178,4 +179,6 @@ public class BuildingManager : MonoBehaviour
         isDeleteBuildingMode = true;
         isBuildingMode = false;
     }
+
+    public static Vector3 PositionZScale(Vector3 _position, float _scale = 0.2f) => _position = new Vector3(_position.x, _position.y, _position.z * _scale);
 }
